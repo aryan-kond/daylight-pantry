@@ -1,0 +1,336 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-canvas);
+  border-bottom: 1px solid var(--color-border);
+  transition: box-shadow var(--duration-state) var(--ease-standard);
+}
+
+/* Light shadow only once the page has scrolled */
+.site-header--scrolled {
+  box-shadow: var(--shadow-card);
+}
+
+/* ---------- Top row (mobile first): menu | logo | actions, then search below ---------- */
+
+.site-header__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    'menu brand actions'
+    'search search search';
+  align-items: center;
+  column-gap: var(--space-3);
+  row-gap: var(--space-3);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-3) var(--gutter);
+}
+
+.site-header__menu-button {
+  grid-area: menu;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-button-size);
+  height: var(--icon-button-size);
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  color: var(--color-text-primary);
+  transition: background-color var(--duration-state) var(--ease-standard);
+}
+
+.site-header__menu-button:hover {
+  background: var(--color-surface-soft);
+}
+
+.site-header__brand {
+  grid-area: brand;
+  justify-self: start;
+  display: inline-flex;
+  border-radius: var(--radius-input);
+}
+
+.site-header__logo {
+  height: 36px;
+  width: auto;
+}
+
+/* ---------- Search ---------- */
+
+.site-header__search {
+  grid-area: search;
+  position: relative;
+}
+
+.site-header__search-icon {
+  position: absolute;
+  top: 50%;
+  left: var(--space-4);
+  transform: translateY(-50%);
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.site-header__search-input {
+  width: 100%;
+  height: var(--control-height);
+  padding: 0 var(--space-4) 0 calc(var(--space-4) + 18px + var(--space-2));
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-primary);
+  font-size: var(--text-body);
+  text-overflow: ellipsis;
+  transition: border-color var(--duration-state) var(--ease-standard);
+}
+
+.site-header__search-input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.site-header__search-input:hover {
+  border-color: var(--color-text-muted);
+}
+
+/* Focus: dark neutral border, no orange ring */
+.site-header__search-input:focus,
+.site-header__search-input:focus-visible {
+  outline: none;
+  border-color: var(--color-text-secondary);
+}
+
+/* ---------- Actions: Sign in (secondary button) + bag share one outlined style ---------- */
+
+.site-header__actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.site-header__sign-in,
+.site-header__cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: var(--icon-button-size);
+  height: var(--icon-button-size);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  color: var(--color-text-primary);
+  transition:
+    background-color var(--duration-state) var(--ease-standard),
+    border-color var(--duration-state) var(--ease-standard);
+}
+
+.site-header__sign-in:hover,
+.site-header__cart:hover {
+  background: var(--color-surface-soft);
+  border-color: var(--color-text-muted);
+}
+
+.site-header__sign-in:active,
+.site-header__cart:active {
+  border-color: var(--color-text-secondary);
+}
+
+/* Label appears on desktop only; the link keeps its accessible name via aria-label */
+.site-header__sign-in-label {
+  display: none;
+}
+
+/* Small item count badge on the bag's top-right corner */
+.site-header__cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--color-text-primary);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 0 2px var(--color-canvas);
+  color: var(--color-canvas);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ---------- Navigation ---------- */
+
+.site-header__nav {
+  display: none;
+}
+
+/* Mobile: the menu opens as a card under the header */
+.site-header__nav--open {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: var(--gutter);
+  right: var(--gutter);
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-overlay);
+  animation: site-header-menu-in var(--duration-menu) var(--ease-standard);
+}
+
+@keyframes site-header-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.site-header__nav-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-header__nav-link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  color: var(--color-text-body);
+  font-size: var(--text-body);
+  font-weight: 500;
+  transition: color var(--duration-state) var(--ease-standard);
+}
+
+.site-header__nav-link:hover {
+  color: var(--color-text-primary);
+}
+
+/* The bold copy reserves width, so the label never shifts when it becomes current */
+.site-header__nav-text {
+  position: relative;
+  display: inline-block;
+}
+
+.site-header__nav-text::before {
+  content: attr(data-text);
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 700;
+}
+
+/* Underline: black, slides in on hover, stays on the current page */
+.site-header__nav-text::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--color-text-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-state) var(--ease-standard);
+}
+
+.site-header__nav-link:hover .site-header__nav-text::after,
+.site-header__nav-link[aria-current='page'] .site-header__nav-text::after {
+  transform: scaleX(1);
+}
+
+/* Current page: underline plus a heavier, darker label (not color alone) */
+.site-header__nav-link[aria-current='page'] {
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+/* ---------- Desktop: two tiers ---------- */
+
+@media (min-width: 960px) {
+  /* Top tier: logo | centered search | sign in + bag */
+  .site-header__row {
+    grid-template-columns: 1fr minmax(240px, 440px) 1fr;
+    grid-template-areas: 'brand search actions';
+    column-gap: var(--space-8);
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+
+  .site-header__menu-button {
+    display: none;
+  }
+
+  .site-header__logo {
+    height: 44px;
+  }
+
+  .site-header__actions {
+    justify-self: end;
+    gap: var(--space-3);
+  }
+
+  /* Same height as the search field so the row lines up */
+  .site-header__sign-in,
+  .site-header__cart {
+    height: var(--control-height);
+  }
+
+  .site-header__cart {
+    width: var(--control-height);
+  }
+
+  .site-header__sign-in {
+    width: auto;
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+  }
+
+  .site-header__sign-in-label {
+    display: inline;
+  }
+
+  /* Second tier: centered category links under a hairline */
+  .site-header__nav,
+  .site-header__nav--open {
+    display: block;
+    position: static;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    border-radius: 0;
+    box-shadow: none;
+    animation: none;
+  }
+
+  .site-header__nav-list {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+}

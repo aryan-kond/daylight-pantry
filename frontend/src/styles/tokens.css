@@ -1,0 +1,73 @@
+/* Design tokens. Source of truth: Daylight_Pantry_Guidelines.pdf */
+:root {
+  /* Brand and interaction */
+  --color-primary: #f47b35;
+  --color-primary-hover: #e66a25;
+  --color-primary-pressed: #cc571e;
+  --color-primary-tint: #fff0e6;
+
+  /* Text */
+  --color-text-primary: #18243a;
+  --color-text-body: #263349;
+  --color-text-secondary: #596579;
+  --color-text-muted: #788397;
+
+  /* Surfaces */
+  --color-canvas: #ffffff;
+  --color-surface-soft: #f7f9fc;
+  --color-border: #e2e8f0;
+
+  /* Semantic (always pair with a label or icon) */
+  --color-positive: #21845a;
+  --color-positive-tint: #e6f4ec;
+  --color-warning: #b7791f;
+  --color-warning-tint: #fff3de;
+  --color-negative: #c44747;
+  --color-negative-tint: #fcecec;
+
+  /* Typography */
+  --font-sans: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --text-body: 1rem;
+  --text-product-detail: 0.9375rem;
+  --text-label: 0.875rem;
+  --text-meta: 0.8125rem;
+  --line-height-body: 1.5;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Shape */
+  --radius-input: 12px;
+  --radius-card: 14px;
+  --radius-overlay: 18px;
+  --radius-pill: 999px;
+  --control-height: 42px;
+  --icon-button-size: 36px;
+
+  /* Elevation */
+  --shadow-card: 0 1px 3px rgba(24, 36, 58, 0.06);
+  --shadow-overlay: 0 8px 24px rgba(24, 36, 58, 0.12);
+
+  /* Motion (250-400ms) */
+  --duration-state: 250ms;
+  --duration-menu: 300ms;
+  --duration-drawer: 350ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Layout */
+  --content-max-width: 1360px;
+  --gutter: 16px;
+}
+
+@media (min-width: 960px) {
+  :root {
+    --gutter: 32px;
+  }
+}
