@@ -13,28 +13,34 @@ type HeaderProps = {
 type NavItem = {
   label: string;
   to: string;
-  isCurrent: (pathname: string, category: string | null) => boolean;
+  isCurrent: (pathname: string, hash: string) => boolean;
 };
 
+// Until the Shop page exists, these links scroll to the matching spot on the homepage.
+// Later they can point to /shop and /shop?category=<slug> again.
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Shop all', to: '/shop', isCurrent: (path, category) => path === '/shop' && !category },
+  {
+    label: 'Shop all',
+    to: '/#shop-by-category',
+    isCurrent: (path, hash) => path === '/' && hash === '#shop-by-category',
+  },
   ...CATEGORIES.map(({ slug, name }) => ({
     label: name,
-    to: `/shop?category=${slug}`,
-    isCurrent: (path: string, category: string | null) => path === '/shop' && category === slug,
+    to: `/#category-${slug}`,
+    isCurrent: (path: string, hash: string) => path === '/' && hash === `#category-${slug}`,
   })),
 ];
 
 export default function Header({ cartCount = 0 }: HeaderProps) {
   const navigate = useNavigate();
-  const { pathname, search } = useLocation();
-  const category = new URLSearchParams(search).get('category');
+  const { pathname, hash } = useLocation();
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [scrolled, setScrolled] = useState(() => window.scrollY > 0);
+  const [categoriesInView, setCategoriesInView] = useState(false);
 
   // Header gets a light shadow once the page has scrolled
   useEffect(() => {
@@ -42,6 +48,21 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // The nav underline only shows while the Shop by category section is on screen.
+  // The margins ignore the sticky header at the top and the bottom third of the screen,
+  // so the section peeking in below the hero does not count.
+  useEffect(() => {
+    const section = document.getElementById('shop-by-category');
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setCategoriesInView(entry.isIntersecting),
+      { rootMargin: '-120px 0px -35% 0px' },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [pathname]);
 
   // Escape closes the mobile menu and returns focus to its button
   useEffect(() => {
@@ -129,7 +150,7 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
               <Link
                 to={to}
                 className="site-header__nav-link"
-                aria-current={isCurrent(pathname, category) ? 'page' : undefined}
+                aria-current={categoriesInView && isCurrent(pathname, hash) ? 'page' : undefined}
                 onClick={() => setMenuOpen(false)}
               >
                 <span className="site-header__nav-text" data-text={label}>
