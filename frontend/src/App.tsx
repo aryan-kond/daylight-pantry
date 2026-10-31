@@ -1,4 +1,5 @@
 import Header from './components/Header/Header';
+import Hero from './components/Hero/Hero';
 
 export default function App() {
   return (
@@ -8,7 +9,9 @@ export default function App() {
       </a>
       {/* cartCount is mock data until the cart store exists */}
       <Header cartCount={2} />
-      <main id="main" />
+      <main id="main">
+        <Hero />
+      </main>
     </>
   );
 }
