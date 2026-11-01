@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router';
-import { Menu, Search, ShoppingBag, UserRound, X } from 'lucide-react';
+import { Link, NavLink, useNavigate } from 'react-router';
+import { Menu, Search, ShoppingCart, UserRound, X } from 'lucide-react';
 import logoFull from '../../assets/logo-full.svg';
-import { CATEGORIES } from '../../data/categories';
 import './Header.css';
 
 type HeaderProps = {
@@ -10,59 +9,27 @@ type HeaderProps = {
   cartCount?: number;
 };
 
-type NavItem = {
-  label: string;
-  to: string;
-  isCurrent: (pathname: string, hash: string) => boolean;
-};
-
-// Until the Shop page exists, these links scroll to the matching spot on the homepage.
-// Later they can point to /shop and /shop?category=<slug> again.
-const NAV_ITEMS: NavItem[] = [
-  {
-    label: 'Shop all',
-    to: '/#shop-by-category',
-    isCurrent: (path, hash) => path === '/' && hash === '#shop-by-category',
-  },
-  ...CATEGORIES.map(({ slug, name }) => ({
-    label: name,
-    to: `/#category-${slug}`,
-    isCurrent: (path: string, hash: string) => path === '/' && hash === `#category-${slug}`,
-  })),
+const NAV_ITEMS = [
+  { label: 'Home', to: '/', end: true },
+  { label: 'Products', to: '/products', end: false },
+  { label: 'Our Story', to: '/our-story', end: false },
+  { label: 'Contact', to: '/contact', end: false },
 ];
 
 export default function Header({ cartCount = 0 }: HeaderProps) {
   const navigate = useNavigate();
-  const { pathname, hash } = useLocation();
-
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [scrolled, setScrolled] = useState(() => window.scrollY > 0);
-  const [categoriesInView, setCategoriesInView] = useState(false);
 
-  // Header gets a light shadow once the page has scrolled
+  // Header gets a line and a light shadow once the page has scrolled
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 0);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  // The nav underline only shows while the Shop by category section is on screen.
-  // The margins ignore the sticky header at the top and the bottom third of the screen,
-  // so the section peeking in below the hero does not count.
-  useEffect(() => {
-    const section = document.getElementById('shop-by-category');
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setCategoriesInView(entry.isIntersecting),
-      { rootMargin: '-120px 0px -35% 0px' },
-    );
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, [pathname]);
 
   // Escape closes the mobile menu and returns focus to its button
   useEffect(() => {
@@ -82,7 +49,8 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
     event.preventDefault();
     const trimmed = query.trim();
     if (!trimmed) return;
-    navigate(`/shop?q=${encodeURIComponent(trimmed)}`);
+    setMenuOpen(false);
+    navigate(`/products?q=${encodeURIComponent(trimmed)}`);
   };
 
   const cartLabel = `Cart, ${cartCount} ${cartCount === 1 ? 'item' : 'items'}`;
@@ -106,6 +74,29 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
           <img src={logoFull} alt="Daylight Pantry" className="site-header__logo" />
         </Link>
 
+        <nav
+          id="primary-navigation"
+          aria-label="Primary"
+          className={`site-header__nav ${menuOpen ? 'site-header__nav--open' : ''}`}
+        >
+          <ul className="site-header__nav-list">
+            {NAV_ITEMS.map(({ label, to, end }) => (
+              <li key={to}>
+                <NavLink
+                  to={to}
+                  end={end}
+                  className="site-header__nav-link"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <span className="site-header__nav-text" data-text={label}>
+                    {label}
+                  </span>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
         <form role="search" className="site-header__search" onSubmit={handleSearch}>
           <label htmlFor="header-search" className="sr-only">
             Search products
@@ -116,7 +107,7 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
             type="search"
             enterKeyHint="search"
             autoComplete="off"
-            placeholder="Search oat bars, nut butters, granola"
+            placeholder="Search products"
             className="site-header__search-input"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -124,12 +115,11 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
         </form>
 
         <div className="site-header__actions">
-          <Link to="/account" className="site-header__sign-in" aria-label="Sign in">
+          <Link to="/account" className="site-header__icon-link" aria-label="Account">
             <UserRound size={20} aria-hidden="true" />
-            <span className="site-header__sign-in-label">Sign in</span>
           </Link>
-          <Link to="/cart" className="site-header__cart" aria-label={cartLabel}>
-            <ShoppingBag size={20} aria-hidden="true" />
+          <Link to="/cart" className="site-header__icon-link" aria-label={cartLabel}>
+            <ShoppingCart size={20} aria-hidden="true" />
             {cartCount > 0 && (
               <span className="site-header__cart-badge tabular" aria-hidden="true">
                 {cartCount > 99 ? '99+' : cartCount}
@@ -138,29 +128,6 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
           </Link>
         </div>
       </div>
-
-      <nav
-        id="primary-navigation"
-        aria-label="Primary"
-        className={`site-header__nav ${menuOpen ? 'site-header__nav--open' : ''}`}
-      >
-        <ul className="site-header__nav-list">
-          {NAV_ITEMS.map(({ label, to, isCurrent }) => (
-            <li key={to}>
-              <Link
-                to={to}
-                className="site-header__nav-link"
-                aria-current={categoriesInView && isCurrent(pathname, hash) ? 'page' : undefined}
-                onClick={() => setMenuOpen(false)}
-              >
-                <span className="site-header__nav-text" data-text={label}>
-                  {label}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
     </header>
   );
 }

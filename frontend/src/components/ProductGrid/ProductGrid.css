@@ -1,0 +1,30 @@
+/* Mobile first: two columns */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.product-grid > li {
+  display: flex;
+}
+
+.product-grid > li > * {
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

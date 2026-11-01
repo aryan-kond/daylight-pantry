@@ -3,16 +3,19 @@
   top: 0;
   z-index: 50;
   background: var(--color-canvas);
-  border-bottom: 1px solid var(--color-border);
-  transition: box-shadow var(--duration-state) var(--ease-standard);
+  border-bottom: 1px solid transparent;
+  transition:
+    box-shadow var(--duration-state) var(--ease-standard),
+    border-color var(--duration-state) var(--ease-standard);
 }
 
-/* Light shadow only once the page has scrolled */
+/* Line and light shadow only once the page has scrolled */
 .site-header--scrolled {
+  border-bottom-color: var(--color-border);
   box-shadow: var(--shadow-card);
 }
 
-/* ---------- Top row (mobile first): menu | logo | actions, then search below ---------- */
+/* ---------- Row (mobile first): menu | logo | actions, then search below ---------- */
 
 .site-header__row {
   display: grid;
@@ -103,7 +106,7 @@
   border-color: var(--color-text-secondary);
 }
 
-/* ---------- Actions: Sign in (secondary button) + bag share one outlined style ---------- */
+/* ---------- Actions: account and cart in black-bordered circles ---------- */
 
 .site-header__actions {
   grid-area: actions;
@@ -112,45 +115,33 @@
   gap: var(--space-2);
 }
 
-.site-header__sign-in,
-.site-header__cart {
+.site-header__icon-link {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
-  width: var(--icon-button-size);
-  height: var(--icon-button-size);
+  width: 40px;
+  height: 40px;
   background: var(--color-canvas);
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-text-primary);
   border-radius: 50%;
   color: var(--color-text-primary);
-  transition:
-    background-color var(--duration-state) var(--ease-standard),
-    border-color var(--duration-state) var(--ease-standard);
+  transition: background-color var(--duration-state) var(--ease-standard);
 }
 
-.site-header__sign-in:hover,
-.site-header__cart:hover {
+.site-header__icon-link:hover {
   background: var(--color-surface-soft);
-  border-color: var(--color-text-muted);
 }
 
-.site-header__sign-in:active,
-.site-header__cart:active {
-  border-color: var(--color-text-secondary);
+.site-header__icon-link:active {
+  background: var(--color-border);
 }
 
-/* Label appears on desktop only; the link keeps its accessible name via aria-label */
-.site-header__sign-in-label {
-  display: none;
-}
-
-/* Small item count badge on the bag's top-right corner */
+/* Small item count badge on the cart's top-right corner */
 .site-header__cart-badge {
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: -6px;
+  right: -6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -212,10 +203,13 @@
   align-items: center;
   min-height: 44px;
   padding: 0 var(--space-3);
+  border-radius: var(--radius-input); /* shapes the keyboard focus ring */
   color: var(--color-text-body);
   font-size: var(--text-body);
   font-weight: 500;
-  transition: color var(--duration-state) var(--ease-standard);
+  transition:
+    color var(--duration-state) var(--ease-standard),
+    opacity var(--duration-state) var(--ease-standard);
 }
 
 .site-header__nav-link:hover {
@@ -237,7 +231,7 @@
   font-weight: 700;
 }
 
-/* Underline: black, slides in on hover, stays on the current page */
+/* Underline: black, slides in on hover and keyboard focus, stays on the current page */
 .site-header__nav-text::after {
   content: '';
   position: absolute;
@@ -253,6 +247,7 @@
 }
 
 .site-header__nav-link:hover .site-header__nav-text::after,
+.site-header__nav-link:focus-visible .site-header__nav-text::after,
 .site-header__nav-link[aria-current='page'] .site-header__nav-text::after {
   transform: scaleX(1);
 }
@@ -263,13 +258,23 @@
   font-weight: 700;
 }
 
-/* ---------- Desktop: two tiers ---------- */
+/* Dim effect: while one link is hovered or focused, the others fade back */
+.site-header__nav-list:has(> li:focus-within) > li:not(:focus-within) > .site-header__nav-link {
+  opacity: 0.5;
+}
 
-@media (min-width: 960px) {
-  /* Top tier: logo | centered search | sign in + bag */
+@media (hover: hover) {
+  .site-header__nav-list:has(> li:hover) > li:not(:hover) > .site-header__nav-link {
+    opacity: 0.5;
+  }
+}
+
+/* ---------- Desktop: one row, brand | nav | search | actions ---------- */
+
+@media (min-width: 1024px) {
   .site-header__row {
-    grid-template-columns: 1fr minmax(240px, 440px) 1fr;
-    grid-template-areas: 'brand search actions';
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-areas: 'brand nav search actions';
     column-gap: var(--space-8);
     padding-top: var(--space-4);
     padding-bottom: var(--space-4);
@@ -283,42 +288,20 @@
     height: 44px;
   }
 
-  .site-header__actions {
-    justify-self: end;
-    gap: var(--space-3);
+  .site-header__search {
+    width: 240px;
   }
 
-  /* Same height as the search field so the row lines up */
-  .site-header__sign-in,
-  .site-header__cart {
-    height: var(--control-height);
-  }
-
-  .site-header__cart {
-    width: var(--control-height);
-  }
-
-  .site-header__sign-in {
-    width: auto;
-    padding: 0 var(--space-4);
-    border-radius: var(--radius-pill);
-    font-weight: 600;
-  }
-
-  .site-header__sign-in-label {
-    display: inline;
-  }
-
-  /* Second tier: centered category links under a hairline */
   .site-header__nav,
   .site-header__nav--open {
+    grid-area: nav;
     display: block;
     position: static;
+    justify-self: center;
     margin: 0;
     padding: 0;
     background: none;
     border: 0;
-    border-top: 1px solid var(--color-border);
     border-radius: 0;
     box-shadow: none;
     animation: none;
@@ -326,11 +309,6 @@
 
   .site-header__nav-list {
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
     gap: var(--space-2);
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    padding: 0 var(--gutter);
   }
 }

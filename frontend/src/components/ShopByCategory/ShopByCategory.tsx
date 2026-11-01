@@ -9,7 +9,7 @@ const CARD_HASH_PREFIX = '#category-';
 export default function ShopByCategory() {
   const { hash, key } = useLocation();
 
-  // Card picked from the header nav, for example "#category-granola"
+  // Category picked from the header Shop menu, for example "#category-granola"
   const activeSlug = hash.startsWith(CARD_HASH_PREFIX) ? hash.slice(CARD_HASH_PREFIX.length) : null;
 
   // When the header links here, scroll to the target and move focus to the card.
@@ -41,30 +41,50 @@ export default function ShopByCategory() {
         </h2>
 
         <ul className="shop-by-category__grid">
-          {CATEGORIES.map(({ slug, name, image }) => (
-            <li key={slug}>
-              <Link
-                id={`category-${slug}`}
-                to={`/shop?category=${slug}`}
-                className={`category-card ${slug === activeSlug ? 'category-card--active' : ''}`}
-                aria-current={slug === activeSlug ? 'true' : undefined}
-              >
-                {/* Decorative: the category name next to it already describes the card */}
-                <img
-                  src={image}
-                  alt=""
-                  width={800}
-                  height={800}
-                  loading="lazy"
-                  className="category-card__image"
-                />
-                <span className="category-card__footer">
-                  <span className="category-card__name">{name}</span>
-                  <ArrowRight size={18} aria-hidden="true" className="category-card__arrow" />
-                </span>
-              </Link>
-            </li>
-          ))}
+          {CATEGORIES.map(({ slug, name, description, image }) => {
+            const active = slug === activeSlug;
+
+            return (
+              <li key={slug}>
+                <Link
+                  id={`category-${slug}`}
+                  to={`/shop?category=${slug}`}
+                  className={`category-card ${active ? 'category-card--active' : ''}`}
+                  aria-current={active ? 'true' : undefined}
+                  aria-labelledby={`category-${slug}-name`}
+                  aria-describedby={`category-${slug}-description`}
+                >
+                  <span className="category-card__body">
+                    <span id={`category-${slug}-name`} className="category-card__name">
+                      {name}
+                    </span>
+                    <span
+                      id={`category-${slug}-description`}
+                      className="category-card__description"
+                    >
+                      {description}
+                    </span>
+                    <span className="category-card__cta">
+                      Shop now
+                      <ArrowRight size={16} aria-hidden="true" className="category-card__arrow" />
+                    </span>
+                  </span>
+
+                  <span className="category-card__media">
+                    {/* Decorative: the name and description above already describe the card */}
+                    <img
+                      src={image}
+                      alt=""
+                      width={640}
+                      height={640}
+                      loading="lazy"
+                      className="category-card__image"
+                    />
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>

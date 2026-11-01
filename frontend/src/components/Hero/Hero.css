@@ -14,63 +14,52 @@
 }
 
 .hero__heading {
-  max-width: 14ch;
-  font-size: clamp(2rem, 1.5rem + 2vw, 2.5rem); /* 32-40px */
+  max-width: 18ch;
+  font-size: 2.25rem; /* 36px */
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .hero__intro {
-  max-width: 46ch;
+  max-width: 44ch;
   margin: var(--space-4) 0 var(--space-6);
   color: var(--color-text-body);
-  font-size: 1.125rem;
+  font-size: 1.125rem; /* 18px */
 }
 
-/* Primary action: Fuel Orange fill, white label, pill radius */
-.hero__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  height: 44px;
-  padding: 0 var(--space-6);
-  background: var(--color-primary);
-  border-radius: var(--radius-pill);
-  color: #ffffff;
-  font-size: var(--text-body);
-  font-weight: 600;
-  transition: background-color var(--duration-state) var(--ease-standard);
-}
-
-.hero__cta:hover {
-  background: var(--color-primary-hover);
-}
-
-.hero__cta:active {
-  background: var(--color-primary-pressed);
-}
-
-/* Mobile: the photo bleeds to the screen edges so the products are as large as possible */
-.hero__image {
+/* Mobile: the photo bleeds to the screen edges so the products stay large */
+.hero__picture {
   display: block;
-  width: calc(100% + 2 * var(--gutter));
-  max-width: none;
-  height: auto;
   margin: 0 calc(-1 * var(--gutter));
 }
 
-/* Desktop: text left, image right */
+.hero__image {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+}
+
+/* Desktop: text left, wide photo right */
 @media (min-width: 960px) {
   .hero__inner {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: var(--space-8);
-    padding-top: var(--space-12);
-    padding-bottom: var(--space-12);
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
   }
 
-  .hero__image {
-    width: 100%;
-    max-width: 100%;
+  .hero__heading {
+    font-size: 2.5rem; /* 40px */
+  }
+
+  .hero__intro {
+    margin-bottom: var(--space-8);
+  }
+
+  .hero__picture {
     margin: 0;
   }
 }
