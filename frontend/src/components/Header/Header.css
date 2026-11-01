@@ -69,19 +69,37 @@
   position: relative;
 }
 
-.site-header__search-icon {
+/* Magnifier is a real submit button, sitting inside the left edge of the field */
+.site-header__search-button {
   position: absolute;
   top: 50%;
-  left: var(--space-4);
-  transform: translateY(-50%);
+  left: var(--space-2);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
   color: var(--color-text-secondary);
-  pointer-events: none;
+  transform: translateY(-50%);
+  transition:
+    background-color var(--duration-state) var(--ease-standard),
+    color var(--duration-state) var(--ease-standard);
+}
+
+.site-header__search-button:hover {
+  background: var(--color-surface-soft);
+  color: var(--color-text-primary);
 }
 
 .site-header__search-input {
   width: 100%;
   height: var(--control-height);
-  padding: 0 var(--space-4) 0 calc(var(--space-4) + 18px + var(--space-2));
+  padding: 0 var(--space-4) 0 calc(var(--space-2) + 32px + var(--space-1));
   background: var(--color-canvas);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);

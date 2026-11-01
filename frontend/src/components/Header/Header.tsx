@@ -1,13 +1,9 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router';
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { Link, NavLink, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { Menu, Search, ShoppingCart, UserRound, X } from 'lucide-react';
 import logoFull from '../../assets/logo-full.svg';
+import { selectCartCount, useCartStore } from '../../store/cartStore';
 import './Header.css';
-
-type HeaderProps = {
-  /** Number of items in the cart. Will come from the cart store later. */
-  cartCount?: number;
-};
 
 const NAV_ITEMS = [
   { label: 'Home', to: '/', end: true },
@@ -16,13 +12,23 @@ const NAV_ITEMS = [
   { label: 'Contact', to: '/contact', end: false },
 ];
 
-export default function Header({ cartCount = 0 }: HeaderProps) {
+export default function Header() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const cartCount = useCartStore(selectCartCount);
+
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [query, setQuery] = useState('');
+  const [draft, setDraft] = useState('');
   const [scrolled, setScrolled] = useState(() => window.scrollY > 0);
+
+  // On the Products page the field mirrors the address (?q=) so results update as you type.
+  // On other pages it keeps its own text until you press Enter or the search button.
+  const onProductsPage = pathname === '/products';
+  const searchValue = onProductsPage ? (searchParams.get('q') ?? '') : draft;
 
   // Header gets a line and a light shadow once the page has scrolled
   useEffect(() => {
@@ -45,11 +51,24 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [menuOpen]);
 
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const next = event.target.value;
+    if (onProductsPage) {
+      setSearchParams(next ? { q: next } : {}, { replace: true });
+    } else {
+      setDraft(next);
+    }
+  };
+
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const trimmed = query.trim();
-    if (!trimmed) return;
+    const trimmed = searchValue.trim();
+    if (!trimmed) {
+      searchInputRef.current?.focus();
+      return;
+    }
     setMenuOpen(false);
+    setDraft('');
     navigate(`/products?q=${encodeURIComponent(trimmed)}`);
   };
 
@@ -101,16 +120,19 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
           <label htmlFor="header-search" className="sr-only">
             Search products
           </label>
-          <Search size={18} aria-hidden="true" className="site-header__search-icon" />
+          <button type="submit" className="site-header__search-button" aria-label="Search">
+            <Search size={18} aria-hidden="true" />
+          </button>
           <input
+            ref={searchInputRef}
             id="header-search"
             type="search"
             enterKeyHint="search"
             autoComplete="off"
             placeholder="Search products"
             className="site-header__search-input"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            value={searchValue}
+            onChange={handleSearchChange}
           />
         </form>
 

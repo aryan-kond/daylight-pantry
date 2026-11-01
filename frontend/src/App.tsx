@@ -11,8 +11,7 @@ export default function App() {
       <a href="#main" className="skip-link">
         Skip to main content
       </a>
-      {/* cartCount is mock data until the cart store exists */}
-      <Header cartCount={2} />
+      <Header />
       <main id="main">
         <Routes>
           <Route path="/" element={<HomePage />} />

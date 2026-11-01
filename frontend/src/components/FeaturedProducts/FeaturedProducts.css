@@ -38,6 +38,13 @@
   transform: translateX(3px);
 }
 
+/* Button under the grid, for people who scroll past the top link */
+.featured-products__footer {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+
 @media (min-width: 960px) {
   .featured-products__inner {
     padding-top: var(--space-12);

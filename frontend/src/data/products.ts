@@ -13,14 +13,17 @@ import pumpkinAndSunflowerSeedsMix from '../assets/products/pumpkin-and-sunflowe
 
 export type ProductCategory = 'Nut Butters & Spreads' | 'Granola' | 'Oat Bars' | 'Nuts & Seeds';
 
+// NOTE: descriptions, net weights and prices below are SAMPLE VALUES.
+// Replace them with the real product information before launch.
 export type Product = {
   id: string;
   name: string;
-  /** Used by search only, it is not shown in the interface */
   category: ProductCategory;
-  /** Pack size shown next to the price. SAMPLE VALUE: replace with the real size. */
-  size: string;
-  /** Price in rupees. SAMPLE VALUE: replace with the real price. */
+  /** One short line shown on the card */
+  description: string;
+  /** Net weight shown next to the price, for example "250 g" */
+  netWeight: string;
+  /** Price in rupees */
   price: number;
   image: string;
 };
@@ -30,7 +33,8 @@ export const PRODUCTS: Product[] = [
     id: 'golden-hour-almond-butter',
     name: 'Golden Hour Almond Butter',
     category: 'Nut Butters & Spreads',
-    size: '250 g jar',
+    description: 'A smooth almond spread for toast and snacks.',
+    netWeight: '250 g',
     price: 499,
     image: goldenHourAlmondButter,
   },
@@ -38,7 +42,8 @@ export const PRODUCTS: Product[] = [
     id: 'smooth-peanut-butter',
     name: 'Smooth Peanut Butter',
     category: 'Nut Butters & Spreads',
-    size: '340 g jar',
+    description: 'Creamy peanut butter for sandwiches and snacks.',
+    netWeight: '340 g',
     price: 349,
     image: smoothPeanutButter,
   },
@@ -46,7 +51,8 @@ export const PRODUCTS: Product[] = [
     id: 'cocoa-hazelnut-spread',
     name: 'Cocoa Hazelnut Spread',
     category: 'Nut Butters & Spreads',
-    size: '250 g jar',
+    description: 'A chocolate hazelnut spread for bread and baking.',
+    netWeight: '250 g',
     price: 449,
     image: cocoaHazelnutSpread,
   },
@@ -54,7 +60,8 @@ export const PRODUCTS: Product[] = [
     id: 'honey-almond-granola',
     name: 'Honey Almond Granola',
     category: 'Granola',
-    size: '400 g pouch',
+    description: 'Oat granola clusters with almonds and honey.',
+    netWeight: '400 g',
     price: 399,
     image: honeyAlmondGranola,
   },
@@ -62,7 +69,8 @@ export const PRODUCTS: Product[] = [
     id: 'berry-sunrise-granola',
     name: 'Berry Sunrise Granola',
     category: 'Granola',
-    size: '400 g pouch',
+    description: 'Oat granola with almonds and berries.',
+    netWeight: '400 g',
     price: 429,
     image: berrySunriseGranola,
   },
@@ -70,7 +78,8 @@ export const PRODUCTS: Product[] = [
     id: 'dark-chocolate-crunch-granola',
     name: 'Dark Chocolate Crunch Granola',
     category: 'Granola',
-    size: '400 g pouch',
+    description: 'Oat granola with chocolate pieces and sliced almonds.',
+    netWeight: '400 g',
     price: 449,
     image: darkChocolateCrunchGranola,
   },
@@ -78,7 +87,8 @@ export const PRODUCTS: Product[] = [
     id: 'peanut-butter-oat-bar',
     name: 'Peanut Butter Oat Bar',
     category: 'Oat Bars',
-    size: 'Pack of 6 bars',
+    description: 'An oat bar with a peanut butter flavour.',
+    netWeight: '6 × 35 g',
     price: 299,
     image: peanutButterOatBar,
   },
@@ -86,7 +96,8 @@ export const PRODUCTS: Product[] = [
     id: 'chocolate-chip-oat-bar',
     name: 'Chocolate Chip Oat Bar',
     category: 'Oat Bars',
-    size: 'Pack of 6 bars',
+    description: 'An oat bar with chocolate chips.',
+    netWeight: '6 × 35 g',
     price: 299,
     image: chocolateChipOatBar,
   },
@@ -94,7 +105,8 @@ export const PRODUCTS: Product[] = [
     id: 'cranberry-almond-oat-bar',
     name: 'Cranberry Almond Oat Bar',
     category: 'Oat Bars',
-    size: 'Pack of 6 bars',
+    description: 'An oat bar with cranberries and almonds.',
+    netWeight: '6 × 35 g',
     price: 329,
     image: cranberryAlmondOatBar,
   },
@@ -102,7 +114,8 @@ export const PRODUCTS: Product[] = [
     id: 'lightly-salted-roasted-almonds',
     name: 'Lightly Salted Roasted Almonds',
     category: 'Nuts & Seeds',
-    size: '200 g box',
+    description: 'Roasted almonds with a light sprinkle of salt.',
+    netWeight: '200 g',
     price: 379,
     image: lightlySaltedRoastedAlmonds,
   },
@@ -110,7 +123,8 @@ export const PRODUCTS: Product[] = [
     id: 'classic-trail-mix',
     name: 'Classic Trail Mix',
     category: 'Nuts & Seeds',
-    size: '250 g box',
+    description: 'Nuts, seeds and dried fruit for snacking.',
+    netWeight: '250 g',
     price: 349,
     image: classicTrailMix,
   },
@@ -118,7 +132,8 @@ export const PRODUCTS: Product[] = [
     id: 'pumpkin-and-sunflower-seeds-mix',
     name: 'Pumpkin & Sunflower Seed Mix',
     category: 'Nuts & Seeds',
-    size: '200 g box',
+    description: 'A seed mix of pumpkin and sunflower seeds.',
+    netWeight: '200 g',
     price: 279,
     image: pumpkinAndSunflowerSeedsMix,
   },

@@ -19,6 +19,13 @@ export default function FeaturedProducts() {
         </div>
 
         <ProductGrid products={FEATURED_PRODUCTS} columns={3} />
+
+        <div className="featured-products__footer">
+          <Link to="/products" className="button-secondary">
+            View all products
+            <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </section>
   );

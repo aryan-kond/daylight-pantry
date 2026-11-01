@@ -3,9 +3,10 @@ import { PRODUCTS, type Product } from '../../data/products';
 import ProductGrid from '../../components/ProductGrid/ProductGrid';
 import './ProductsPage.css';
 
-// Every search word must appear in the product name, category or size
+// Every search word must appear in the product name, category, description or net weight
 function matchesSearch(product: Product, query: string): boolean {
-  const haystack = `${product.name} ${product.category} ${product.size}`.toLowerCase();
+  const haystack =
+    `${product.name} ${product.category} ${product.description} ${product.netWeight}`.toLowerCase();
   return query
     .toLowerCase()
     .split(/\s+/)
