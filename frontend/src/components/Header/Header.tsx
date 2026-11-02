@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
-import { Link, NavLink, useLocation, useNavigate, useSearchParams } from 'react-router';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { Link, NavLink, useNavigate, useSearchParams } from 'react-router';
 import { Menu, Search, ShoppingCart, UserRound, X } from 'lucide-react';
 import logoFull from '../../assets/logo-full.svg';
 import { selectCartCount, useCartStore } from '../../store/cartStore';
@@ -14,21 +14,18 @@ const NAV_ITEMS = [
 
 export default function Header() {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const cartCount = useCartStore(selectCartCount);
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [draft, setDraft] = useState('');
   const [scrolled, setScrolled] = useState(() => window.scrollY > 0);
 
-  // On the Products page the field mirrors the address (?q=) so results update as you type.
-  // On other pages it keeps its own text until you press Enter or the search button.
-  const onProductsPage = pathname === '/products';
-  const searchValue = onProductsPage ? (searchParams.get('q') ?? '') : draft;
+  // The field shows the current search (?q=). Its key changes with it, so the text
+  // resets when the search changes from outside, for example "Clear search".
+  const urlQuery = searchParams.get('q') ?? '';
 
   // Header gets a line and a light shadow once the page has scrolled
   useEffect(() => {
@@ -51,24 +48,20 @@ export default function Header() {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [menuOpen]);
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const next = event.target.value;
-    if (onProductsPage) {
-      setSearchParams(next ? { q: next } : {}, { replace: true });
-    } else {
-      setDraft(next);
-    }
-  };
-
+  // Manual search: runs on Enter or on the magnifier button
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const trimmed = searchValue.trim();
+    const value = new FormData(event.currentTarget).get('q');
+    const trimmed = typeof value === 'string' ? value.trim() : '';
+
     if (!trimmed) {
-      searchInputRef.current?.focus();
+      // An empty search on the results page clears the results
+      if (urlQuery) navigate('/products');
+      else searchInputRef.current?.focus();
       return;
     }
+
     setMenuOpen(false);
-    setDraft('');
     navigate(`/products?q=${encodeURIComponent(trimmed)}`);
   };
 
@@ -80,7 +73,7 @@ export default function Header() {
         <button
           ref={menuButtonRef}
           type="button"
-          className="site-header__menu-button"
+          className="site-header__menu-button icon-fill"
           aria-expanded={menuOpen}
           aria-controls="primary-navigation"
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -107,9 +100,7 @@ export default function Header() {
                   className="site-header__nav-link"
                   onClick={() => setMenuOpen(false)}
                 >
-                  <span className="site-header__nav-text" data-text={label}>
-                    {label}
-                  </span>
+                  <span className="site-header__nav-text">{label}</span>
                 </NavLink>
               </li>
             ))}
@@ -120,27 +111,28 @@ export default function Header() {
           <label htmlFor="header-search" className="sr-only">
             Search products
           </label>
-          <button type="submit" className="site-header__search-button" aria-label="Search">
-            <Search size={18} aria-hidden="true" />
-          </button>
           <input
+            key={urlQuery}
             ref={searchInputRef}
             id="header-search"
+            name="q"
             type="search"
             enterKeyHint="search"
             autoComplete="off"
             placeholder="Search products"
             className="site-header__search-input"
-            value={searchValue}
-            onChange={handleSearchChange}
+            defaultValue={urlQuery}
           />
+          <button type="submit" className="site-header__search-button" aria-label="Search">
+            <Search size={18} aria-hidden="true" />
+          </button>
         </form>
 
         <div className="site-header__actions">
-          <Link to="/account" className="site-header__icon-link" aria-label="Account">
+          <Link to="/account" className="site-header__icon-link icon-fill" aria-label="Account">
             <UserRound size={20} aria-hidden="true" />
           </Link>
-          <Link to="/cart" className="site-header__icon-link" aria-label={cartLabel}>
+          <Link to="/cart" className="site-header__icon-link icon-fill" aria-label={cartLabel}>
             <ShoppingCart size={20} aria-hidden="true" />
             {cartCount > 0 && (
               <span className="site-header__cart-badge tabular" aria-hidden="true">

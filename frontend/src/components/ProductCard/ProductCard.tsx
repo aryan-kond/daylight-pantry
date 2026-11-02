@@ -65,7 +65,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               ref={addButtonRef}
               type="button"
-              className="product-card__add"
+              className="button-primary product-card__add"
               aria-label={`Add ${name} to cart`}
               onClick={handleAdd}
             >

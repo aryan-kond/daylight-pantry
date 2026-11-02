@@ -1,0 +1,21 @@
+/* Words stay whole when the line wraps; each letter animates on its own */
+.blur-cascade__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.blur-cascade__char {
+  display: inline-block;
+  animation: blur-cascade-in calc(var(--fx-duration) * 0.8) ease both;
+}
+
+@keyframes blur-cascade-in {
+  from {
+    filter: blur(6px);
+    opacity: 0.3;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}

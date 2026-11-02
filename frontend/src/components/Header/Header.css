@@ -31,6 +31,7 @@
   padding: var(--space-3) var(--gutter);
 }
 
+/* Orange fill effect comes from the shared .icon-fill class */
 .site-header__menu-button {
   grid-area: menu;
   display: inline-flex;
@@ -40,14 +41,9 @@
   height: var(--icon-button-size);
   padding: 0;
   background: none;
-  border: 0;
+  border: 1.5px solid transparent;
   border-radius: 50%;
   color: var(--color-text-primary);
-  transition: background-color var(--duration-state) var(--ease-standard);
-}
-
-.site-header__menu-button:hover {
-  background: var(--color-surface-soft);
 }
 
 .site-header__brand {
@@ -62,44 +58,17 @@
   width: auto;
 }
 
-/* ---------- Search ---------- */
+/* ---------- Search: manual, with an orange magnifier button at the end ---------- */
 
 .site-header__search {
   grid-area: search;
   position: relative;
 }
 
-/* Magnifier is a real submit button, sitting inside the left edge of the field */
-.site-header__search-button {
-  position: absolute;
-  top: 50%;
-  left: var(--space-2);
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  background: none;
-  border: 0;
-  border-radius: 50%;
-  color: var(--color-text-secondary);
-  transform: translateY(-50%);
-  transition:
-    background-color var(--duration-state) var(--ease-standard),
-    color var(--duration-state) var(--ease-standard);
-}
-
-.site-header__search-button:hover {
-  background: var(--color-surface-soft);
-  color: var(--color-text-primary);
-}
-
 .site-header__search-input {
   width: 100%;
   height: var(--control-height);
-  padding: 0 var(--space-4) 0 calc(var(--space-2) + 32px + var(--space-1));
+  padding: 0 calc(var(--space-1) + 34px + var(--space-2)) 0 var(--space-4);
   background: var(--color-canvas);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
@@ -113,6 +82,11 @@
   color: var(--color-text-secondary);
 }
 
+/* The orange button replaces the browser's own clear (x) button */
+.site-header__search-input::-webkit-search-cancel-button {
+  display: none;
+}
+
 .site-header__search-input:hover {
   border-color: var(--color-text-muted);
 }
@@ -124,6 +98,46 @@
   border-color: var(--color-text-secondary);
 }
 
+/* Orange circle with a white magnifier; hover floods it with white (reverse fill) */
+.site-header__search-button {
+  position: absolute;
+  top: 50%;
+  right: var(--space-1);
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  background: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+  border-radius: 50%;
+  color: #ffffff;
+  transform: translateY(-50%);
+  transition: color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.3);
+}
+
+.site-header__search-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 50%;
+  background: #ffffff;
+  transform: scale(0);
+  transition: transform var(--fx-t);
+}
+
+.site-header__search-button:is(:hover, :focus-visible) {
+  color: var(--color-primary);
+}
+
+.site-header__search-button:is(:hover, :focus-visible)::before {
+  transform: scale(1);
+}
+
 /* ---------- Actions: account and cart in black-bordered circles ---------- */
 
 .site-header__actions {
@@ -133,8 +147,8 @@
   gap: var(--space-2);
 }
 
+/* Orange fill effect comes from the shared .icon-fill class */
 .site-header__icon-link {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -144,15 +158,6 @@
   border: 1.5px solid var(--color-text-primary);
   border-radius: 50%;
   color: var(--color-text-primary);
-  transition: background-color var(--duration-state) var(--ease-standard);
-}
-
-.site-header__icon-link:hover {
-  background: var(--color-surface-soft);
-}
-
-.site-header__icon-link:active {
-  background: var(--color-border);
 }
 
 /* Small item count badge on the cart's top-right corner */
@@ -160,6 +165,7 @@
   position: absolute;
   top: -6px;
   right: -6px;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -216,6 +222,7 @@
   list-style: none;
 }
 
+/* Links keep one weight in every state: never bold */
 .site-header__nav-link {
   display: flex;
   align-items: center;
@@ -234,22 +241,12 @@
   color: var(--color-text-primary);
 }
 
-/* The bold copy reserves width, so the label never shifts when it becomes current */
 .site-header__nav-text {
   position: relative;
   display: inline-block;
 }
 
-.site-header__nav-text::before {
-  content: attr(data-text);
-  display: block;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  font-weight: 700;
-}
-
-/* Underline: black, slides in only on hover, keyboard focus and press */
+/* Underline: black, slides in on hover, keyboard focus and press, and stays on the current page */
 .site-header__nav-text::after {
   content: '';
   position: absolute;
@@ -266,14 +263,13 @@
 
 .site-header__nav-link:hover .site-header__nav-text::after,
 .site-header__nav-link:focus-visible .site-header__nav-text::after,
-.site-header__nav-link:active .site-header__nav-text::after {
+.site-header__nav-link:active .site-header__nav-text::after,
+.site-header__nav-link[aria-current='page'] .site-header__nav-text::after {
   transform: scaleX(1);
 }
 
-/* Current page: a heavier, darker label, with no underline */
 .site-header__nav-link[aria-current='page'] {
   color: var(--color-text-primary);
-  font-weight: 700;
 }
 
 /* Dim effect: while one link is hovered or focused, the others fade back */
@@ -307,7 +303,7 @@
   }
 
   .site-header__search {
-    width: 240px;
+    width: 260px;
   }
 
   .site-header__nav,

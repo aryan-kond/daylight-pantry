@@ -1,20 +1,36 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { ArrowRight } from 'lucide-react';
 import heroDesktop from '../../assets/hero.webp';
 import heroMobile from '../../assets/hero-mobile.webp';
+import BlurCascadeText from '../BlurCascadeText/BlurCascadeText';
 import './Hero.css';
 
+// The intro animation plays once per page load or refresh.
+// Going to another page and coming back shows the plain text.
+let introPlayed = false;
+
 export default function Hero() {
+  const [playIntro] = useState(() => !introPlayed);
+
+  useEffect(() => {
+    introPlayed = true;
+  }, []);
+
   return (
     <section className="hero" aria-labelledby="hero-heading">
       <div className="hero__inner">
         <div className="hero__content">
           <h1 id="hero-heading" className="hero__heading">
-            Everyday snacks, made simple.
+            <BlurCascadeText text="Everyday snacks, made simple." animate={playIntro} />
           </h1>
           <p className="hero__intro">
-            Granola, oat bars, nuts and seeds, and nut butters for your everyday routines. Browse
-            the range, check sizes and prices, and order in a few steps.
+            <BlurCascadeText
+              text="Granola, oat bars, nuts and seeds, and nut butters for your everyday routines. Browse the range, check sizes and prices, and order in a few steps."
+              step={12}
+              delay={500}
+              animate={playIntro}
+            />
           </p>
           <Link to="/products" className="button-primary">
             Shop now
