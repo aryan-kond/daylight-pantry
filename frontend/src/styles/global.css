@@ -88,7 +88,10 @@ button {
   transform: translateY(0);
 }
 
-/* ---------- Buttons: radial fill grows from the center on hover and keyboard focus ---------- */
+/* ---------- Buttons ----------
+   .button-primary   orange fill, white label. Hover reverses to white with an orange label.
+   .button-secondary white fill, charcoal outline. Hover reverses to charcoal with a white label.
+   Add .button--arrow for the arrow push effect; without it the fill grows as a radial circle. */
 
 .button-primary,
 .button-secondary {
@@ -102,75 +105,92 @@ button {
   gap: var(--space-2);
   height: 44px;
   padding: 0 var(--space-6);
-  border: 1.5px solid;
+  background: var(--btn-bg);
+  border: 1.5px solid var(--btn-border);
   border-radius: var(--radius-pill);
+  color: var(--btn-ink);
   font-size: var(--text-body);
   font-weight: 600;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  /* text and border flip roughly when the fill passes under them */
-  transition:
-    color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.3),
-    border-color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.3);
+  /* the label flips roughly when the fill passes under it */
+  transition: color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.3);
 }
 
+.button-primary {
+  --btn-bg: var(--color-primary);
+  --btn-ink: #ffffff;
+  --btn-border: var(--color-primary);
+  --btn-fill: #ffffff;
+  --btn-fill-ink: var(--color-primary);
+  --btn-disc: #ffffff;
+  --btn-arrow: var(--color-primary);
+}
+
+.button-secondary {
+  --btn-bg: var(--color-canvas);
+  --btn-ink: var(--color-text-primary);
+  --btn-border: var(--color-text-primary);
+  --btn-fill: var(--color-text-primary);
+  --btn-fill-ink: #ffffff;
+  --btn-disc: var(--color-text-primary);
+  --btn-arrow: #ffffff;
+}
+
+.button-primary:is(:hover, :focus-visible),
+.button-secondary:is(:hover, :focus-visible) {
+  --fill-open: 1;
+  color: var(--btn-fill-ink);
+}
+
+/* Radial fill: a circle grows from the exact center */
 .button-primary::before,
 .button-secondary::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
+  background: var(--btn-fill);
   clip-path: circle(calc(var(--fill-open) * 80%) at 50% 50%);
   transition: clip-path var(--fx-t);
 }
 
-.button-primary:is(:hover, :focus-visible),
-.button-secondary:is(:hover, :focus-visible) {
-  --fill-open: 1;
+/* Arrow push: a small arrow disc grows until it floods the whole button */
+.button--arrow {
+  --arrow-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E");
+  padding-inline: var(--space-6) 3.4rem;
+  transition: color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.4);
 }
 
-/* Primary: Fuel Orange fill, white label. Hover floods it with white (reverse fill). */
-.button-primary {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: #ffffff;
+.button--arrow::before {
+  top: 50%;
+  right: 4px;
+  bottom: auto;
+  left: auto;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  border-radius: 50%;
+  background: var(--btn-disc);
+  clip-path: none;
+  transform: scale(calc(1 + var(--fill-open) * 13));
+  transition: transform calc(var(--fx-duration) * 1.1) var(--fx-ease);
 }
 
-.button-primary::before {
-  background: #ffffff;
-}
-
-.button-primary:is(:hover, :focus-visible) {
-  color: var(--color-primary);
-}
-
-/* Secondary: white fill, dark outline. Hover floods it with Fuel Orange. */
-.button-secondary {
-  background: var(--color-canvas);
-  border-color: var(--color-text-primary);
-  color: var(--color-text-primary);
-}
-
-.button-secondary::before {
-  background: var(--color-primary);
-}
-
-.button-secondary:is(:hover, :focus-visible) {
-  border-color: var(--color-primary);
-  color: #ffffff;
-}
-
-.button-secondary:active::before {
-  background: var(--color-primary-pressed);
-}
-
-.button-secondary svg {
-  transition: transform var(--duration-state) var(--ease-standard);
-}
-
-.button-secondary:hover svg,
-.button-secondary:focus-visible svg {
-  transform: translateX(3px);
+.button--arrow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  background: var(--btn-arrow);
+  -webkit-mask: var(--arrow-mask) center / 16px no-repeat;
+  mask: var(--arrow-mask) center / 16px no-repeat;
+  transform: translateX(calc(var(--fill-open) * 4px));
+  transition: transform var(--fx-t);
 }
 
 /* ---------- Icon buttons: orange fill floods the circle from the center ---------- */

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight } from 'lucide-react';
 import heroDesktop from '../../assets/hero.webp';
 import heroMobile from '../../assets/hero-mobile.webp';
 import BlurCascadeText from '../BlurCascadeText/BlurCascadeText';
@@ -32,9 +31,8 @@ export default function Hero() {
               animate={playIntro}
             />
           </p>
-          <Link to="/products" className="button-primary">
+          <Link to="/products" className="button-primary button--arrow">
             Shop now
-            <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
 
