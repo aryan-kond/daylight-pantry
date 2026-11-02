@@ -8,6 +8,7 @@ type CartState = {
   quantities: Record<string, number>;
   addItem: (productId: string) => void;
   decreaseItem: (productId: string) => void;
+  removeItem: (productId: string) => void;
 };
 
 export const useCartStore = create<CartState>()(
@@ -32,6 +33,13 @@ export const useCartStore = create<CartState>()(
           } else {
             delete quantities[productId];
           }
+          return { quantities };
+        }),
+
+      removeItem: (productId) =>
+        set((state) => {
+          const quantities = { ...state.quantities };
+          delete quantities[productId];
           return { quantities };
         }),
     }),

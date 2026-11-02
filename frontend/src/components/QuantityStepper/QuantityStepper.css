@@ -1,0 +1,47 @@
+/* Outlined pill with minus, quantity and plus */
+.quantity-stepper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 128px;
+  height: 44px;
+  padding: 0 var(--space-1);
+  background: var(--color-canvas);
+  border: 1.5px solid var(--color-text-primary);
+  border-radius: var(--radius-pill);
+}
+
+.quantity-stepper__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  color: var(--color-text-primary);
+  transition: background-color var(--duration-state) var(--ease-standard);
+}
+
+.quantity-stepper__button:hover:not(:disabled) {
+  background: var(--color-surface-soft);
+}
+
+.quantity-stepper__button:active:not(:disabled) {
+  background: var(--color-border);
+}
+
+.quantity-stepper__button:disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.quantity-stepper__value {
+  min-width: 2ch;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}

@@ -249,7 +249,7 @@
   font-weight: 700;
 }
 
-/* Underline: black, slides in on hover and keyboard focus, stays on the current page */
+/* Underline: black, slides in only on hover, keyboard focus and press */
 .site-header__nav-text::after {
   content: '';
   position: absolute;
@@ -266,11 +266,11 @@
 
 .site-header__nav-link:hover .site-header__nav-text::after,
 .site-header__nav-link:focus-visible .site-header__nav-text::after,
-.site-header__nav-link[aria-current='page'] .site-header__nav-text::after {
+.site-header__nav-link:active .site-header__nav-text::after {
   transform: scaleX(1);
 }
 
-/* Current page: underline plus a heavier, darker label (not color alone) */
+/* Current page: a heavier, darker label, with no underline */
 .site-header__nav-link[aria-current='page'] {
   color: var(--color-text-primary);
   font-weight: 700;

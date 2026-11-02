@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import HomePage from './pages/HomePage/HomePage';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
+import CartPage from './pages/CartPage/CartPage';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </main>
     </>
