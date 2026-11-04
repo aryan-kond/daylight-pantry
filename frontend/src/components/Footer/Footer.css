@@ -1,0 +1,313 @@
+/* ---------- Newsletter band ---------- */
+
+.site-footer__newsletter {
+  background: var(--color-surface-soft);
+  border-top: 1px solid var(--color-border);
+}
+
+.site-footer__newsletter-inner {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter);
+}
+
+.site-footer__newsletter-title {
+  font-size: 1.375rem; /* 22px */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.site-footer__newsletter-text {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+}
+
+.site-footer__form-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Pill-shaped email field */
+.site-footer__input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 var(--space-4);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-primary);
+  font-size: var(--text-body);
+  transition: border-color var(--duration-state) var(--ease-standard);
+}
+
+.site-footer__input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.site-footer__input:hover {
+  border-color: var(--color-text-muted);
+}
+
+.site-footer__input:focus-visible {
+  border-color: var(--color-primary);
+}
+
+.site-footer__input[aria-invalid='true'] {
+  border-color: var(--color-negative);
+}
+
+.site-footer__subscribe {
+  flex: none;
+}
+
+/* Space is reserved for the message, so the layout does not jump when it appears */
+.site-footer__form-message {
+  min-height: 1.4em;
+  margin: var(--space-2) 0 0 var(--space-4);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.site-footer__form-message--error {
+  color: var(--color-negative);
+}
+
+.site-footer__form-message--success {
+  color: var(--color-positive);
+}
+
+/* ---------- Dark main footer ---------- */
+
+.site-footer__main {
+  --footer-text: #ffffff;
+  --footer-muted: rgba(255, 255, 255, 0.72);
+  --footer-line: rgba(255, 255, 255, 0.16);
+  background: var(--color-text-primary);
+  color: var(--footer-muted);
+}
+
+/* Mobile first: two columns of links, brand and contact across the full width */
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8) var(--space-6);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-12) var(--gutter) var(--space-8);
+}
+
+.site-footer__brand,
+.site-footer__contact {
+  grid-column: 1 / -1;
+}
+
+.site-footer__logo-link {
+  display: inline-flex;
+  border-radius: var(--radius-input);
+}
+
+.site-footer__logo {
+  height: 40px;
+  width: auto;
+}
+
+.site-footer__tagline {
+  margin: var(--space-4) 0 0;
+  color: var(--footer-text);
+  font-size: 1.25rem; /* 20px */
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.site-footer__about {
+  max-width: 36ch;
+  margin: var(--space-2) 0 var(--space-6);
+  color: var(--footer-muted);
+  font-size: 0.9375rem; /* 15px */
+}
+
+.site-footer__heading {
+  margin-bottom: var(--space-4);
+  color: var(--footer-text);
+  font-size: 1rem; /* 16px */
+  font-weight: 600;
+}
+
+.site-footer__heading--social {
+  margin-bottom: var(--space-3);
+}
+
+/* Social icons: white-bordered circles, orange fill on hover (shared .icon-fill) */
+.site-footer__social {
+  display: flex;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1.5px solid var(--footer-text);
+  border-radius: 50%;
+  color: var(--footer-text);
+}
+
+.site-footer__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__link {
+  display: inline-block;
+  border-radius: var(--radius-input); /* shapes the keyboard focus ring */
+  color: var(--footer-muted);
+  font-size: 0.9375rem; /* 15px */
+  transition: color var(--duration-state) var(--ease-standard);
+}
+
+.site-footer__link:hover {
+  color: var(--footer-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Contact: labelled rows with icon circles ---------- */
+
+/* The header Contact link scrolls here; it takes focus without a ring */
+.site-footer__contact {
+  scroll-margin-top: var(--space-16);
+}
+
+.site-footer__contact:focus {
+  outline: none;
+}
+
+.site-footer__contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__contact-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  border-radius: var(--radius-input); /* shapes the keyboard focus ring */
+}
+
+.site-footer__contact-icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: transparent;
+  border: 1.5px solid var(--footer-text);
+  border-radius: 50%;
+  color: var(--footer-text);
+}
+
+/* Hovering or focusing the whole row floods its icon circle orange (same effect as .icon-fill) */
+.site-footer__contact-link:is(:hover, :focus-visible) .site-footer__contact-icon {
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.site-footer__contact-link:is(:hover, :focus-visible) .site-footer__contact-icon::before {
+  transform: scale(1);
+}
+
+.site-footer__contact-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-style: normal; /* the address element is italic by default */
+}
+
+.site-footer__contact-label {
+  color: var(--footer-muted);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.4;
+}
+
+.site-footer__contact-value {
+  color: var(--footer-text);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 500;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Bottom bar ---------- */
+
+.site-footer__bottom {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.site-footer__bottom-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-6);
+  padding: var(--space-4) 0 var(--space-6);
+  border-top: 1px solid var(--footer-line);
+}
+
+.site-footer__copyright,
+.site-footer__legal {
+  margin: 0;
+  color: var(--footer-muted);
+  font-size: var(--text-meta); /* 13px, secondary information */
+}
+
+.site-footer__legal .site-footer__link {
+  font-size: var(--text-meta);
+}
+
+/* ---------- Tablet and desktop ---------- */
+
+@media (min-width: 768px) {
+  .site-footer__newsletter-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+    gap: var(--space-12);
+  }
+
+  .site-footer__inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-top: var(--space-16);
+  }
+}
+
+@media (min-width: 1100px) {
+  .site-footer__inner {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1.6fr;
+    gap: var(--space-12);
+  }
+
+  .site-footer__brand,
+  .site-footer__contact {
+    grid-column: auto;
+  }
+}

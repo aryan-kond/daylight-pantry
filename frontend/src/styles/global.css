@@ -88,10 +88,9 @@ button {
   transform: translateY(0);
 }
 
-/* ---------- Buttons ----------
+/* ---------- Buttons: a radial fill grows from the center on hover and keyboard focus ----------
    .button-primary   orange fill, white label. Hover reverses to white with an orange label.
-   .button-secondary white fill, charcoal outline. Hover reverses to charcoal with a white label.
-   Add .button--arrow for the arrow push effect; without it the fill grows as a radial circle. */
+   .button-secondary white fill, charcoal outline. Hover reverses to charcoal with a white label. */
 
 .button-primary,
 .button-secondary {
@@ -123,8 +122,6 @@ button {
   --btn-border: var(--color-primary);
   --btn-fill: #ffffff;
   --btn-fill-ink: var(--color-primary);
-  --btn-disc: #ffffff;
-  --btn-arrow: var(--color-primary);
 }
 
 .button-secondary {
@@ -133,8 +130,6 @@ button {
   --btn-border: var(--color-text-primary);
   --btn-fill: var(--color-text-primary);
   --btn-fill-ink: #ffffff;
-  --btn-disc: var(--color-text-primary);
-  --btn-arrow: #ffffff;
 }
 
 .button-primary:is(:hover, :focus-visible),
@@ -143,7 +138,6 @@ button {
   color: var(--btn-fill-ink);
 }
 
-/* Radial fill: a circle grows from the exact center */
 .button-primary::before,
 .button-secondary::before {
   content: '';
@@ -153,44 +147,6 @@ button {
   background: var(--btn-fill);
   clip-path: circle(calc(var(--fill-open) * 80%) at 50% 50%);
   transition: clip-path var(--fx-t);
-}
-
-/* Arrow push: a small arrow disc grows until it floods the whole button */
-.button--arrow {
-  --arrow-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E");
-  padding-inline: var(--space-6) 3.4rem;
-  transition: color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.4);
-}
-
-.button--arrow::before {
-  top: 50%;
-  right: 4px;
-  bottom: auto;
-  left: auto;
-  width: 32px;
-  height: 32px;
-  margin-top: -16px;
-  border-radius: 50%;
-  background: var(--btn-disc);
-  clip-path: none;
-  transform: scale(calc(1 + var(--fill-open) * 13));
-  transition: transform calc(var(--fx-duration) * 1.1) var(--fx-ease);
-}
-
-.button--arrow::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 4px;
-  z-index: 1;
-  width: 32px;
-  height: 32px;
-  margin-top: -16px;
-  background: var(--btn-arrow);
-  -webkit-mask: var(--arrow-mask) center / 16px no-repeat;
-  mask: var(--arrow-mask) center / 16px no-repeat;
-  transform: translateX(calc(var(--fill-open) * 4px));
-  transition: transform var(--fx-t);
 }
 
 /* ---------- Icon buttons: orange fill floods the circle from the center ---------- */

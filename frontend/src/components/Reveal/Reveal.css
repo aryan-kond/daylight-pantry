@@ -1,0 +1,12 @@
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--duration-drawer) var(--ease-standard),
+    transform var(--duration-drawer) var(--ease-standard);
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: none;
+}

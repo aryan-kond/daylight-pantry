@@ -21,7 +21,7 @@ export default function FeaturedProducts() {
         <ProductGrid products={FEATURED_PRODUCTS} columns={3} />
 
         <div className="featured-products__footer">
-          <Link to="/products" className="button-secondary button--arrow">
+          <Link to="/products" className="button-secondary">
             View all products
           </Link>
         </div>

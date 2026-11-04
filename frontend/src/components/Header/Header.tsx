@@ -1,15 +1,15 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from 'react';
 import { Link, NavLink, useNavigate, useSearchParams } from 'react-router';
 import { Menu, Search, ShoppingCart, UserRound, X } from 'lucide-react';
 import logoFull from '../../assets/logo-full.svg';
 import { selectCartCount, useCartStore } from '../../store/cartStore';
 import './Header.css';
 
+// Contact is not a page: it scrolls to the contact block in the footer
 const NAV_ITEMS = [
   { label: 'Home', to: '/', end: true },
   { label: 'Products', to: '/products', end: false },
   { label: 'Our Story', to: '/our-story', end: false },
-  { label: 'Contact', to: '/contact', end: false },
 ];
 
 export default function Header() {
@@ -65,6 +65,19 @@ export default function Header() {
     navigate(`/products?q=${encodeURIComponent(trimmed)}`);
   };
 
+  // Scrolls smoothly to the footer contact block and moves focus there
+  const handleContactClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const target = document.getElementById('contact');
+    if (!target) return;
+
+    event.preventDefault();
+    setMenuOpen(false);
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    target.focus({ preventScroll: true });
+  };
+
   const cartLabel = `Cart, ${cartCount} ${cartCount === 1 ? 'item' : 'items'}`;
 
   return (
@@ -104,6 +117,11 @@ export default function Header() {
                 </NavLink>
               </li>
             ))}
+            <li>
+              <a href="#contact" className="site-header__nav-link" onClick={handleContactClick}>
+                <span className="site-header__nav-text">Contact</span>
+              </a>
+            </li>
           </ul>
         </nav>
 

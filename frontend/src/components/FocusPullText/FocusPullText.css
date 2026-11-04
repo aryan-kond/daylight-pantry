@@ -1,0 +1,29 @@
+.focus-pull {
+  display: inline-block;
+  max-width: 100%;
+}
+
+/* Paragraphs fill the width of their parent */
+.focus-pull--block {
+  display: block;
+}
+
+/* Before the first view: blurred and spaced out */
+.focus-pull--waiting {
+  filter: blur(6px);
+  letter-spacing: var(--pull-spread);
+  opacity: 0.35;
+}
+
+/* No end keyframe: the animation lands on the text's normal state */
+.focus-pull--playing {
+  animation: focus-pull calc(var(--fx-duration) * 1.4) var(--fx-ease) both;
+}
+
+@keyframes focus-pull {
+  from {
+    filter: blur(6px);
+    letter-spacing: var(--pull-spread);
+    opacity: 0.35;
+  }
+}
