@@ -1,37 +1,79 @@
+/* ---------- Header: a full-width bar at the top, a floating pill once you scroll ----------
+   The header keeps one fixed height (--header-h) so the page below never jumps. The bar
+   inside it changes size, so --header-h must match the full-size bar:
+   mobile  12 + 40 + 12 + 42 + 12 padding and gaps, plus 2 for the border = 120
+   desktop 16 + 44 + 16, plus 2 for the border = 78 */
+
 .site-header {
+  --header-h: 120px;
+  --resize: var(--duration-drawer) var(--ease-standard);
   position: sticky;
   top: 0;
   z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: var(--header-h);
+  padding: 0;
   background: var(--color-canvas);
-  border-bottom: 1px solid transparent;
+  /* Only the bar itself takes clicks, so the page stays clickable around the pill */
+  pointer-events: none;
   transition:
-    box-shadow var(--duration-state) var(--ease-standard),
-    border-color var(--duration-state) var(--ease-standard);
+    background-color var(--resize),
+    padding var(--resize);
 }
 
-/* Line and light shadow only once the page has scrolled */
 .site-header--scrolled {
-  border-bottom-color: var(--color-border);
-  box-shadow: var(--shadow-card);
+  padding: 0 var(--space-3);
+  background: transparent;
 }
 
-/* ---------- Row (mobile first): menu | logo | actions, then search below ---------- */
+/* ---------- The bar (mobile first): menu | logo | actions, then search below ---------- */
 
 .site-header__row {
+  position: relative;
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-template-areas:
     'menu brand actions'
     'search search search';
   align-items: center;
+  align-content: center;
   column-gap: var(--space-3);
   row-gap: var(--space-3);
+  width: 100%;
   max-width: var(--content-max-width);
-  margin: 0 auto;
+  margin-top: 0;
   padding: var(--space-3) var(--gutter);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
+  pointer-events: auto;
+  transition:
+    max-width var(--resize),
+    margin-top var(--resize),
+    padding var(--resize),
+    row-gap var(--resize),
+    column-gap var(--resize),
+    border-radius var(--resize),
+    background-color var(--resize),
+    border-color var(--resize),
+    box-shadow var(--resize);
 }
 
-/* Orange fill effect comes from the shared .icon-fill class */
+/* Pill state: narrower, lifted off the top, rounded, with a soft shadow */
+.site-header--scrolled .site-header__row {
+  max-width: 1080px;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  row-gap: var(--space-2);
+  background: var(--color-canvas);
+  border-color: var(--color-border);
+  border-radius: 28px;
+  box-shadow: var(--shadow-overlay);
+}
+
 .site-header__menu-button {
   grid-area: menu;
   display: inline-flex;
@@ -44,6 +86,16 @@
   border: 1.5px solid transparent;
   border-radius: 50%;
   color: var(--color-text-primary);
+  transition:
+    width var(--resize),
+    height var(--resize),
+    color var(--fx-t),
+    border-color var(--fx-t);
+}
+
+.site-header--scrolled .site-header__menu-button {
+  width: 32px;
+  height: 32px;
 }
 
 .site-header__brand {
@@ -56,6 +108,11 @@
 .site-header__logo {
   height: 36px;
   width: auto;
+  transition: height var(--resize);
+}
+
+.site-header--scrolled .site-header__logo {
+  height: 30px;
 }
 
 /* ---------- Search: manual, with an orange magnifier button at the end ---------- */
@@ -75,7 +132,13 @@
   color: var(--color-text-primary);
   font-size: var(--text-body);
   text-overflow: ellipsis;
-  transition: border-color var(--duration-state) var(--ease-standard);
+  transition:
+    height var(--resize),
+    border-color var(--duration-state) var(--ease-standard);
+}
+
+.site-header--scrolled .site-header__search-input {
+  height: 38px;
 }
 
 .site-header__search-input::placeholder {
@@ -116,7 +179,15 @@
   border-radius: 50%;
   color: #ffffff;
   transform: translateY(-50%);
-  transition: color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.3);
+  transition:
+    color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.3),
+    width var(--resize),
+    height var(--resize);
+}
+
+.site-header--scrolled .site-header__search-button {
+  width: 30px;
+  height: 30px;
 }
 
 .site-header__search-button::before {
@@ -158,6 +229,16 @@
   border: 1.5px solid var(--color-text-primary);
   border-radius: 50%;
   color: var(--color-text-primary);
+  transition:
+    width var(--resize),
+    height var(--resize),
+    color var(--fx-t),
+    border-color var(--fx-t);
+}
+
+.site-header--scrolled .site-header__icon-link {
+  width: 36px;
+  height: 36px;
 }
 
 /* Small item count badge on the cart's top-right corner */
@@ -187,14 +268,13 @@
   display: none;
 }
 
-/* Mobile: the menu opens as a card under the header */
+/* Mobile: the menu opens as a card attached under the bar */
 .site-header__nav--open {
   display: block;
   position: absolute;
-  top: 100%;
-  left: var(--gutter);
-  right: var(--gutter);
-  margin-top: var(--space-2);
+  top: calc(100% + var(--space-2));
+  left: 0;
+  right: 0;
   padding: var(--space-2);
   background: var(--color-canvas);
   border: 1px solid var(--color-border);
@@ -233,6 +313,7 @@
   font-size: var(--text-body);
   font-weight: 500;
   transition:
+    min-height var(--resize),
     color var(--duration-state) var(--ease-standard),
     opacity var(--duration-state) var(--ease-standard);
 }
@@ -286,12 +367,26 @@
 /* ---------- Desktop: one row, brand | nav | search | actions ---------- */
 
 @media (min-width: 1024px) {
+  .site-header {
+    --header-h: 78px;
+  }
+
+  .site-header--scrolled {
+    padding: 0 var(--space-6);
+  }
+
   .site-header__row {
     grid-template-columns: auto 1fr auto auto;
     grid-template-areas: 'brand nav search actions';
     column-gap: var(--space-8);
     padding-top: var(--space-4);
     padding-bottom: var(--space-4);
+  }
+
+  .site-header--scrolled .site-header__row {
+    column-gap: var(--space-6);
+    margin-top: var(--space-3);
+    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-6);
   }
 
   .site-header__menu-button {
@@ -302,8 +397,21 @@
     height: 44px;
   }
 
+  .site-header--scrolled .site-header__logo {
+    height: 32px;
+  }
+
   .site-header__search {
     width: 260px;
+    transition: width var(--resize);
+  }
+
+  .site-header--scrolled .site-header__search {
+    width: 220px;
+  }
+
+  .site-header--scrolled .site-header__nav-link {
+    min-height: 40px;
   }
 
   .site-header__nav,

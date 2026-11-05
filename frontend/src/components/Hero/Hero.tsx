@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { ShoppingBag } from 'lucide-react';
 import heroDesktop from '../../assets/hero.webp';
 import heroMobile from '../../assets/hero-mobile.webp';
 import BlurCascadeText from '../BlurCascadeText/BlurCascadeText';
@@ -33,7 +32,6 @@ export default function Hero() {
             />
           </p>
           <Link to="/products" className="button-primary">
-            <ShoppingBag size={18} aria-hidden="true" />
             Shop now
           </Link>
         </div>

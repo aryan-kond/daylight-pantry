@@ -259,7 +259,7 @@ export default function Footer() {
                   href={`mailto:${CONTACT.email}`}
                   className="site-footer__contact-row site-footer__contact-link"
                 >
-                  <span className="site-footer__contact-icon icon-fill">
+                  <span className="site-footer__contact-icon">
                     <Mail size={18} aria-hidden="true" />
                   </span>
                   <span className="site-footer__contact-text">
@@ -273,7 +273,7 @@ export default function Footer() {
                   href={`tel:${CONTACT.phoneLink}`}
                   className="site-footer__contact-row site-footer__contact-link"
                 >
-                  <span className="site-footer__contact-icon icon-fill">
+                  <span className="site-footer__contact-icon">
                     <Phone size={18} aria-hidden="true" />
                   </span>
                   <span className="site-footer__contact-text">

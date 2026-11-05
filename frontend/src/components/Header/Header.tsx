@@ -12,6 +12,9 @@ const NAV_ITEMS = [
   { label: 'Our Story', to: '/our-story', end: false },
 ];
 
+// Scroll distance after which the bar shrinks into a pill
+const SHRINK_AFTER = 40;
+
 export default function Header() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -21,15 +24,15 @@ export default function Header() {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(() => window.scrollY > 0);
+  const [scrolled, setScrolled] = useState(() => window.scrollY > SHRINK_AFTER);
 
   // The field shows the current search (?q=). Its key changes with it, so the text
   // resets when the search changes from outside, for example "Clear search".
   const urlQuery = searchParams.get('q') ?? '';
 
-  // Header gets a line and a light shadow once the page has scrolled
+  // The header is a full-width bar at the top and a floating pill once the page has scrolled
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0);
+    const onScroll = () => setScrolled(window.scrollY > SHRINK_AFTER);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
