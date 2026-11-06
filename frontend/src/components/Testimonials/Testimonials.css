@@ -1,0 +1,121 @@
+/* Warm cream band: separates this section from the white sections around it */
+.testimonials {
+  background: var(--color-surface-cream);
+}
+
+.testimonials__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-12) var(--gutter);
+}
+
+/* Mobile first: one column, with room under each card for the quote badge */
+.testimonials__grid {
+  display: grid;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cards in a row all take the height of the tallest one */
+.testimonials__item {
+  display: flex;
+  padding-bottom: var(--space-6);
+}
+
+.testimonials__item > .reveal {
+  display: flex;
+  flex: 1;
+}
+
+.testimonial-card {
+  --glow-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+  padding: var(--space-8) var(--space-6) var(--space-12);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  transition:
+    border-color var(--duration-drawer) var(--glow-ease),
+    box-shadow var(--duration-drawer) var(--glow-ease);
+}
+
+.testimonial-card__quote {
+  margin: 0;
+}
+
+.testimonial-card__quote p {
+  margin: 0;
+  color: var(--color-text-body);
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.55;
+}
+
+.testimonial-card__name {
+  margin-top: var(--space-6);
+  color: var(--color-text-primary);
+  font-size: 1rem; /* 16px */
+  font-weight: 600;
+}
+
+/* Round quote badge that overlaps the bottom edge of the card */
+.testimonial-card__mark {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--color-canvas);
+  border-radius: 50%;
+  box-shadow: var(--shadow-overlay);
+  color: var(--color-primary);
+  transform: translateX(-50%);
+  transition:
+    background-color var(--duration-drawer) var(--glow-ease),
+    color var(--duration-drawer) var(--glow-ease);
+}
+
+/* Hover (real pointers only): the border glows orange and the quote badge fills */
+@media (hover: hover) {
+  .testimonial-card:hover {
+    border-color: var(--color-primary);
+    box-shadow:
+      0 0 0 1px var(--color-primary),
+      0 0 28px rgba(244, 123, 53, 0.32);
+  }
+
+  .testimonial-card:hover .testimonial-card__mark {
+    background: var(--color-primary);
+    color: #ffffff;
+  }
+}
+
+/* Tablet and desktop: three equal cards in a row */
+@media (min-width: 768px) {
+  .testimonials__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+
+  .testimonial-card {
+    padding: var(--space-12) var(--space-8) var(--space-16);
+  }
+}
+
+@media (min-width: 960px) {
+  .testimonials__inner {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+}

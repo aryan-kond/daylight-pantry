@@ -23,10 +23,17 @@
 }
 
 .hero__intro {
-  max-width: 44ch;
+  max-width: 52ch;
   margin: var(--space-4) 0 var(--space-6);
   color: var(--color-text-body);
   font-size: 1.125rem; /* 18px */
+}
+
+/* Shop Now (primary) and Get Inspired (secondary) side by side */
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
 }
 
 /* Mobile: the photo bleeds to the screen edges so the products stay large */

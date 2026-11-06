@@ -1,6 +1,6 @@
 import { useRef, useState, type FormEvent } from 'react';
 import { Link } from 'react-router';
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone, Play, Smartphone } from 'lucide-react';
 import logoFullLight from '../../assets/logo-full-light.svg';
 import './Footer.css';
 
@@ -51,6 +51,12 @@ const SOCIALS = [
   { label: 'YouTube', href: '#', Icon: YouTubeIcon },
 ];
 
+// DEMO: stand-in badges. Use the official App Store and Google Play badges when the apps exist.
+const APPS = [
+  { lead: 'Download on the', store: 'App Store', Icon: Smartphone },
+  { lead: 'Get it on', store: 'Google Play', Icon: Play },
+];
+
 // DEMO: dummy contact details. Replace with the real ones.
 const CONTACT = {
   email: 'hello@daylightpantry.example',
@@ -60,11 +66,88 @@ const CONTACT = {
   address: ['42 Sample Street', 'Mumbai, Maharashtra 400001'],
 };
 
-/** DEMO: a link that goes nowhere yet. Replace it with a real link when the page exists. */
-function InertLink({ children }: { children: string }) {
+type FooterLink = {
+  label: string;
+  /** Page inside the site */
+  to?: string;
+  /** Plain link or anchor. Links with neither `to` nor `href` do nothing when clicked. */
+  href?: string;
+};
+
+type FooterColumn = {
+  id: string;
+  title: string;
+  links: FooterLink[];
+};
+
+// DEMO: links without a destination are fake. Give them `to` or `href` when the page exists.
+const COLUMNS: FooterColumn[] = [
+  {
+    id: 'shop',
+    title: 'Shop',
+    links: [
+      { label: 'Home', to: '/' },
+      { label: 'Products', to: '/products' },
+      { label: 'Cart', to: '/cart' },
+      { label: 'New Arrivals' },
+      { label: 'Gift Cards' },
+      { label: 'Bulk Orders' },
+    ],
+  },
+  {
+    id: 'company',
+    title: 'Company',
+    links: [
+      { label: 'Our Story', to: '/our-story' },
+      { label: 'Careers' },
+      { label: 'Press' },
+      { label: 'Blog' },
+      { label: 'Partnerships' },
+    ],
+  },
+  {
+    id: 'support',
+    title: 'Support',
+    links: [
+      { label: 'Help Center' },
+      { label: 'Shipping & Delivery' },
+      { label: 'Returns & Refunds' },
+      { label: 'Track Your Order' },
+      { label: 'Contact Us', href: '#contact' },
+    ],
+  },
+  {
+    id: 'legal',
+    title: 'Legal',
+    links: [
+      { label: 'Terms & Conditions' },
+      { label: 'Privacy Policy' },
+      { label: 'Cookie Policy' },
+      { label: 'Accessibility' },
+    ],
+  },
+];
+
+function FooterLinkItem({ label, to, href }: FooterLink) {
+  if (to) {
+    return (
+      <Link to={to} className="site-footer__link">
+        {label}
+      </Link>
+    );
+  }
+
+  if (href) {
+    return (
+      <a href={href} className="site-footer__link">
+        {label}
+      </a>
+    );
+  }
+
   return (
     <a href="#" className="site-footer__link" onClick={(event) => event.preventDefault()}>
-      {children}
+      {label}
     </a>
   );
 }
@@ -101,7 +184,7 @@ export default function Footer() {
 
   return (
     <footer className="site-footer">
-      {/* ---------- Newsletter ---------- */}
+      {/* ---------- Newsletter (soft peach band) ---------- */}
       <section className="site-footer__newsletter" aria-labelledby="footer-newsletter-heading">
         <div className="site-footer__newsletter-inner">
           <div>
@@ -149,19 +232,114 @@ export default function Footer() {
         </div>
       </section>
 
-      {/* ---------- Main footer ---------- */}
+      {/* ---------- Main footer (charcoal) ---------- */}
       <div className="site-footer__main">
         <div className="site-footer__inner">
-          <div className="site-footer__brand">
-            <Link to="/" className="site-footer__logo-link">
-              <img src={logoFullLight} alt="Daylight Pantry" className="site-footer__logo" />
-            </Link>
-            <p className="site-footer__tagline">Everyday snacks, made simple.</p>
-            <p className="site-footer__about">
-              Granola, oat bars, nuts and seeds, and nut butters for ordinary days.
-            </p>
+          <div className="site-footer__top">
+            <div className="site-footer__brand">
+              <Link to="/" className="site-footer__logo-link">
+                <img src={logoFullLight} alt="Daylight Pantry" className="site-footer__logo" />
+              </Link>
+            </div>
 
-            <h2 className="site-footer__heading site-footer__heading--social">Follow along</h2>
+            <div>
+              <h2 className="site-footer__heading">Get the app</h2>
+              <ul className="site-footer__apps">
+                {APPS.map(({ lead, store, Icon }) => (
+                  <li key={store}>
+                    <a
+                      href="#"
+                      className="site-footer__app"
+                      aria-label={`${lead} ${store}`}
+                      onClick={(event) => event.preventDefault()}
+                    >
+                      <Icon size={22} aria-hidden="true" />
+                      <span className="site-footer__app-text">
+                        <span className="site-footer__app-lead">{lead}</span>
+                        <span className="site-footer__app-store">{store}</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="site-footer__columns">
+            {COLUMNS.map(({ id, title, links }) => (
+              <nav key={id} aria-labelledby={`footer-${id}-heading`}>
+                <h2 id={`footer-${id}-heading`} className="site-footer__heading">
+                  {title}
+                </h2>
+                <ul className="site-footer__list">
+                  {links.map((link) => (
+                    <li key={link.label}>
+                      <FooterLinkItem {...link} />
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+
+            {/* The header Contact link scrolls here and moves focus to this block */}
+            <section
+              id="contact"
+              tabIndex={-1}
+              className="site-footer__contact"
+              aria-labelledby="footer-contact-heading"
+            >
+              <h2 id="footer-contact-heading" className="site-footer__heading">
+                Contact
+              </h2>
+              <ul className="site-footer__contact-list">
+                <li>
+                  <a
+                    href={`mailto:${CONTACT.email}`}
+                    className="site-footer__contact-row site-footer__contact-link"
+                  >
+                    <span className="site-footer__contact-icon">
+                      <Mail size={18} aria-hidden="true" />
+                    </span>
+                    <span className="site-footer__contact-text">
+                      <span className="site-footer__contact-label">Email us</span>
+                      <span className="site-footer__contact-value">{CONTACT.email}</span>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={`tel:${CONTACT.phoneLink}`}
+                    className="site-footer__contact-row site-footer__contact-link"
+                  >
+                    <span className="site-footer__contact-icon">
+                      <Phone size={18} aria-hidden="true" />
+                    </span>
+                    <span className="site-footer__contact-text">
+                      <span className="site-footer__contact-label">Call us, {CONTACT.hours}</span>
+                      <span className="site-footer__contact-value tabular">{CONTACT.phone}</span>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <div className="site-footer__contact-row">
+                    <span className="site-footer__contact-icon">
+                      <MapPin size={18} aria-hidden="true" />
+                    </span>
+                    <address className="site-footer__contact-text">
+                      <span className="site-footer__contact-label">Visit us</span>
+                      {CONTACT.address.map((line) => (
+                        <span key={line} className="site-footer__contact-value">
+                          {line}
+                        </span>
+                      ))}
+                    </address>
+                  </div>
+                </li>
+              </ul>
+            </section>
+          </div>
+
+          <div className="site-footer__bottom">
             <ul className="site-footer__social" aria-label="Social media">
               {SOCIALS.map(({ label, href, Icon }) => (
                 <li key={label}>
@@ -178,138 +356,8 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <nav aria-labelledby="footer-explore-heading">
-            <h2 id="footer-explore-heading" className="site-footer__heading">
-              Explore
-            </h2>
-            <ul className="site-footer__list">
-              <li>
-                <Link to="/" className="site-footer__link">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" className="site-footer__link">
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link to="/cart" className="site-footer__link">
-                  Cart
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          <nav aria-labelledby="footer-care-heading">
-            <h2 id="footer-care-heading" className="site-footer__heading">
-              Customer Care
-            </h2>
-            <ul className="site-footer__list">
-              <li>
-                <InertLink>FAQs</InertLink>
-              </li>
-              <li>
-                <InertLink>Shipping &amp; Delivery</InertLink>
-              </li>
-              <li>
-                <InertLink>Returns &amp; Refunds</InertLink>
-              </li>
-              <li>
-                <a href="#contact" className="site-footer__link">
-                  Contact Us
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          <nav aria-labelledby="footer-brand-heading">
-            <h2 id="footer-brand-heading" className="site-footer__heading">
-              Our Brand
-            </h2>
-            <ul className="site-footer__list">
-              <li>
-                <Link to="/our-story" className="site-footer__link">
-                  Our Story
-                </Link>
-              </li>
-              <li>
-                <a href="#contact" className="site-footer__link">
-                  Get in Touch
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          {/* The header Contact link scrolls here and moves focus to this block */}
-          <section
-            id="contact"
-            tabIndex={-1}
-            className="site-footer__contact"
-            aria-labelledby="footer-contact-heading"
-          >
-            <h2 id="footer-contact-heading" className="site-footer__heading">
-              Contact
-            </h2>
-            <ul className="site-footer__contact-list">
-              <li>
-                <a
-                  href={`mailto:${CONTACT.email}`}
-                  className="site-footer__contact-row site-footer__contact-link"
-                >
-                  <span className="site-footer__contact-icon">
-                    <Mail size={18} aria-hidden="true" />
-                  </span>
-                  <span className="site-footer__contact-text">
-                    <span className="site-footer__contact-label">Email us</span>
-                    <span className="site-footer__contact-value">{CONTACT.email}</span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`tel:${CONTACT.phoneLink}`}
-                  className="site-footer__contact-row site-footer__contact-link"
-                >
-                  <span className="site-footer__contact-icon">
-                    <Phone size={18} aria-hidden="true" />
-                  </span>
-                  <span className="site-footer__contact-text">
-                    <span className="site-footer__contact-label">Call us, {CONTACT.hours}</span>
-                    <span className="site-footer__contact-value tabular">{CONTACT.phone}</span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <div className="site-footer__contact-row">
-                  <span className="site-footer__contact-icon">
-                    <MapPin size={18} aria-hidden="true" />
-                  </span>
-                  <address className="site-footer__contact-text">
-                    <span className="site-footer__contact-label">Visit us</span>
-                    {CONTACT.address.map((line) => (
-                      <span key={line} className="site-footer__contact-value">
-                        {line}
-                      </span>
-                    ))}
-                  </address>
-                </div>
-              </li>
-            </ul>
-          </section>
-        </div>
-
-        <div className="site-footer__bottom">
-          <div className="site-footer__bottom-inner">
             <p className="site-footer__copyright">
               © {new Date().getFullYear()} Daylight Pantry. All rights reserved.
-            </p>
-            <p className="site-footer__legal">
-              <InertLink>Privacy</InertLink>
-              <span aria-hidden="true"> · </span>
-              <InertLink>Terms</InertLink>
             </p>
           </div>
         </div>

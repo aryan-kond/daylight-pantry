@@ -25,15 +25,21 @@ export default function Hero() {
           </h1>
           <p className="hero__intro">
             <BlurCascadeText
-              text="Granola, oat bars, nuts and seeds, and nut butters for your everyday routines. Browse the range, check sizes and prices, and order in a few steps."
-              step={12}
+              text="Granola, oat bars, nuts and seeds, and nut butters for your everyday routines. From quick weekday breakfasts to afternoon snacks and spreads for toast, our pantry is stocked for ordinary days that deserve a little something good. Every product shows its pack size, net weight and price up front, so browsing, comparing and ordering stay simple."
+              step={6}
               delay={500}
               animate={playIntro}
             />
           </p>
-          <Link to="/products" className="button-primary">
-            Shop now
-          </Link>
+          <div className="hero__actions">
+            <Link to="/products" className="button-primary">
+              Shop Now
+            </Link>
+            {/* The Goodness Journal page does not exist yet */}
+            <Link to="/journal" className="button-secondary">
+              Get Inspired
+            </Link>
+          </div>
         </div>
 
         {/* Tighter crop on phones keeps the products large; wide crop from desktop width up */}

@@ -16,11 +16,25 @@
   height: var(--header-h);
   padding: 0;
   background: var(--color-canvas);
+  /* A fine line and a faint shadow separate the full-width bar from the hero */
+  box-shadow:
+    0 1px 0 var(--color-border),
+    0 10px 20px -14px rgba(24, 36, 58, 0.14);
   /* Only the bar itself takes clicks, so the page stays clickable around the pill */
   pointer-events: none;
   transition:
     background-color var(--resize),
-    padding var(--resize);
+    padding var(--resize),
+    box-shadow var(--resize);
+}
+
+/* The pill has its own shadow, so the divider fades out */
+.site-header--scrolled {
+  padding: 0 var(--space-3);
+  background: transparent;
+  box-shadow:
+    0 1px 0 transparent,
+    0 10px 20px -14px transparent;
 }
 
 .site-header--scrolled {
@@ -386,7 +400,7 @@
   .site-header--scrolled .site-header__row {
     column-gap: var(--space-6);
     margin-top: var(--space-3);
-    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-6);
+    padding: var(--space-2) var(--space-3);
   }
 
   .site-header__menu-button {

@@ -4,7 +4,7 @@
   --color-primary: #f47b35;
   --color-primary-hover: #e66a25;
   --color-primary-pressed: #cc571e;
-  --color-primary-tint: #fff0e6;
+  --color-primary-tint: #fff0e6; /* also the "soft peach" section background */
 
   /* Text */
   --color-text-primary: #18243a;
@@ -15,6 +15,7 @@
   /* Surfaces */
   --color-canvas: #ffffff;
   --color-surface-soft: #f7f9fc;
+  --color-surface-cream: #fff8f2; /* "warm cream" section background */
   --color-border: #e2e8f0;
 
   /* Semantic (always pair with a label or icon) */
