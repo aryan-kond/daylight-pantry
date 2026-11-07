@@ -8,6 +8,7 @@ export default function HomePage() {
       <Hero />
       <hr className="section-divider" />
       <FeaturedProducts />
+      <hr className="section-divider" />
       <Testimonials />
     </>
   );

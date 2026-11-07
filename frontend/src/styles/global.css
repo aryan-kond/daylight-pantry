@@ -88,65 +88,56 @@ button {
   transform: translateY(0);
 }
 
-/* ---------- Buttons: a radial fill grows from the center on hover and keyboard focus ----------
-   .button-primary   orange fill, white label. Hover reverses to white with an orange label.
-   .button-secondary white fill, charcoal outline. Hover reverses to charcoal with a white label. */
+/* ---------- Buttons ----------
+   .button-primary   orange fill, white label
+   .button-secondary white fill, charcoal outline
+   Hover is a smooth 2.5% scale and nothing else: no shadow, no color change, no click
+   animation. With reduced motion the buttons do not scale at all.
+   All standalone buttons are 176px x 44px. */
 
 .button-primary,
 .button-secondary {
-  --fill-open: 0;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
+  min-width: 11rem; /* 176px */
   height: 44px;
   padding: 0 var(--space-6);
-  background: var(--btn-bg);
-  border: 1.5px solid var(--btn-border);
+  border: 1.5px solid;
   border-radius: var(--radius-pill);
-  color: var(--btn-ink);
   font-size: var(--text-body);
   font-weight: 600;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  /* the label flips roughly when the fill passes under it */
-  transition: color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.3);
 }
 
 .button-primary {
-  --btn-bg: var(--color-primary);
-  --btn-ink: #ffffff;
-  --btn-border: var(--color-primary);
-  --btn-fill: #ffffff;
-  --btn-fill-ink: var(--color-primary);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
 }
 
 .button-secondary {
-  --btn-bg: var(--color-canvas);
-  --btn-ink: var(--color-text-primary);
-  --btn-border: var(--color-text-primary);
-  --btn-fill: var(--color-text-primary);
-  --btn-fill-ink: #ffffff;
+  background: var(--color-canvas);
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary);
 }
 
-.button-primary:is(:hover, :focus-visible),
-.button-secondary:is(:hover, :focus-visible) {
-  --fill-open: 1;
-  color: var(--btn-fill-ink);
+@media (prefers-reduced-motion: no-preference) {
+  .button-primary,
+  .button-secondary {
+    transition: transform 200ms ease;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
 }
 
-.button-primary::before,
-.button-secondary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--btn-fill);
-  clip-path: circle(calc(var(--fill-open) * 80%) at 50% 50%);
-  transition: clip-path var(--fx-t);
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .button-primary:hover,
+  .button-secondary:hover {
+    transform: scale(1.025);
+  }
 }
 
 /* ---------- Icon buttons: orange fill floods the circle from the center ---------- */

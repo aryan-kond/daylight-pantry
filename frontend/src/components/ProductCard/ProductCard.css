@@ -96,6 +96,7 @@
 /* Add to cart: shared primary button (radial fill) sized for the card */
 .product-card__add {
   width: 100%;
+  min-width: 0;
   padding: 0 var(--space-3);
   font-size: 0.9375rem; /* 15px */
   white-space: nowrap;

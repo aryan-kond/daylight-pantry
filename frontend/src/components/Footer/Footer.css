@@ -1,8 +1,4 @@
-/* ---------- Newsletter band: soft peach ---------- */
-
-.site-footer__newsletter {
-  background: var(--color-primary-tint);
-}
+/* ---------- Newsletter band: plain white, set off by the divider line above it ---------- */
 
 .site-footer__newsletter-inner {
   display: grid;
@@ -26,12 +22,13 @@
 
 .site-footer__form-row {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-2);
 }
 
 /* Pill-shaped email field */
 .site-footer__input {
-  flex: 1;
+  flex: 1 1 200px;
   min-width: 0;
   height: 44px;
   padding: 0 var(--space-4);
@@ -137,16 +134,25 @@
   align-items: center;
   gap: var(--space-2);
   height: 48px;
-  padding: 0 var(--space-4);
+  padding: 0 20px;
   background: #000000;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 10px;
+  border-radius: var(--radius-pill);
   color: #ffffff;
-  transition: border-color var(--duration-state) var(--ease-standard);
 }
 
-.site-footer__app:hover {
-  border-color: #ffffff;
+/* Same hover as the other buttons: a smooth 2.5% scale and nothing else */
+@media (prefers-reduced-motion: no-preference) {
+  .site-footer__app {
+    transition: transform 200ms ease;
+    will-change: transform;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .site-footer__app:hover {
+    transform: scale(1.025);
+  }
 }
 
 .site-footer__app-text {

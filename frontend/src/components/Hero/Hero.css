@@ -29,11 +29,15 @@
   font-size: 1.125rem; /* 18px */
 }
 
-/* Shop Now (primary) and Get Inspired (secondary) side by side */
+/* Shop Now (primary) and Get Inspired (secondary) side by side, exactly the same size */
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+}
+
+.hero__actions > a {
+  min-width: 11rem; /* 176px wide, 44px tall (height comes from the shared button style) */
 }
 
 /* Mobile: the photo bleeds to the screen edges so the products stay large */

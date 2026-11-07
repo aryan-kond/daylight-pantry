@@ -1,49 +1,17 @@
-/* ---------- Header: a full-width bar at the top, a floating pill once you scroll ----------
-   The header keeps one fixed height (--header-h) so the page below never jumps. The bar
-   inside it changes size, so --header-h must match the full-size bar:
-   mobile  12 + 40 + 12 + 42 + 12 padding and gaps, plus 2 for the border = 120
-   desktop 16 + 44 + 16, plus 2 for the border = 78 */
+/* ---------- Header: a sticky capsule from the very start; it never changes on scroll ---------- */
 
 .site-header {
-  --header-h: 120px;
-  --resize: var(--duration-drawer) var(--ease-standard);
   position: sticky;
   top: 0;
   z-index: 50;
   display: flex;
-  align-items: flex-start;
   justify-content: center;
-  height: var(--header-h);
-  padding: 0;
-  background: var(--color-canvas);
-  /* A fine line and a faint shadow separate the full-width bar from the hero */
-  box-shadow:
-    0 1px 0 var(--color-border),
-    0 10px 20px -14px rgba(24, 36, 58, 0.14);
-  /* Only the bar itself takes clicks, so the page stays clickable around the pill */
+  padding: 6px var(--gutter);
+  /* Only the capsule takes clicks, so the page stays clickable in the margins around it */
   pointer-events: none;
-  transition:
-    background-color var(--resize),
-    padding var(--resize),
-    box-shadow var(--resize);
 }
 
-/* The pill has its own shadow, so the divider fades out */
-.site-header--scrolled {
-  padding: 0 var(--space-3);
-  background: transparent;
-  box-shadow:
-    0 1px 0 transparent,
-    0 10px 20px -14px transparent;
-}
-
-.site-header--scrolled {
-  padding: 0 var(--space-3);
-  background: transparent;
-}
-
-/* ---------- The bar (mobile first): menu | logo | actions, then search below ---------- */
-
+/* Mobile first: menu | logo | actions, then search below. Two rows, so rounded corners. */
 .site-header__row {
   position: relative;
   display: grid;
@@ -52,42 +20,20 @@
     'menu brand actions'
     'search search search';
   align-items: center;
-  align-content: center;
   column-gap: var(--space-3);
   row-gap: var(--space-3);
   width: 100%;
-  max-width: var(--content-max-width);
-  margin-top: 0;
-  padding: var(--space-3) var(--gutter);
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 0;
-  box-shadow: none;
-  pointer-events: auto;
-  transition:
-    max-width var(--resize),
-    margin-top var(--resize),
-    padding var(--resize),
-    row-gap var(--resize),
-    column-gap var(--resize),
-    border-radius var(--resize),
-    background-color var(--resize),
-    border-color var(--resize),
-    box-shadow var(--resize);
-}
-
-/* Pill state: narrower, lifted off the top, rounded, with a soft shadow */
-.site-header--scrolled .site-header__row {
-  max-width: 1080px;
-  margin-top: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  row-gap: var(--space-2);
+  /* Lines the capsule's outer edges up with the page content */
+  max-width: calc(var(--content-max-width) - 2 * var(--gutter));
+  padding: var(--space-3) var(--space-4);
   background: var(--color-canvas);
-  border-color: var(--color-border);
-  border-radius: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: 36px;
   box-shadow: var(--shadow-overlay);
+  pointer-events: auto;
 }
 
+/* Orange fill effect comes from the shared .icon-fill class */
 .site-header__menu-button {
   grid-area: menu;
   display: inline-flex;
@@ -100,16 +46,6 @@
   border: 1.5px solid transparent;
   border-radius: 50%;
   color: var(--color-text-primary);
-  transition:
-    width var(--resize),
-    height var(--resize),
-    color var(--fx-t),
-    border-color var(--fx-t);
-}
-
-.site-header--scrolled .site-header__menu-button {
-  width: 32px;
-  height: 32px;
 }
 
 .site-header__brand {
@@ -122,11 +58,6 @@
 .site-header__logo {
   height: 36px;
   width: auto;
-  transition: height var(--resize);
-}
-
-.site-header--scrolled .site-header__logo {
-  height: 30px;
 }
 
 /* ---------- Search: manual, with an orange magnifier button at the end ---------- */
@@ -138,21 +69,15 @@
 
 .site-header__search-input {
   width: 100%;
-  height: var(--control-height);
-  padding: 0 calc(var(--space-1) + 34px + var(--space-2)) 0 var(--space-4);
+  height: 40px;
+  padding: 0 calc(var(--space-1) + 32px + var(--space-2)) 0 var(--space-4);
   background: var(--color-canvas);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
   color: var(--color-text-primary);
   font-size: var(--text-body);
   text-overflow: ellipsis;
-  transition:
-    height var(--resize),
-    border-color var(--duration-state) var(--ease-standard);
-}
-
-.site-header--scrolled .site-header__search-input {
-  height: 38px;
+  transition: border-color var(--duration-state) var(--ease-standard);
 }
 
 .site-header__search-input::placeholder {
@@ -175,7 +100,7 @@
   border-color: var(--color-text-secondary);
 }
 
-/* Orange circle with a white magnifier; hover floods it with white (reverse fill) */
+/* Orange circle with a white magnifier; hover floods it with white (icon ripple) */
 .site-header__search-button {
   position: absolute;
   top: 50%;
@@ -185,23 +110,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   background: var(--color-primary);
   border: 1.5px solid var(--color-primary);
   border-radius: 50%;
   color: #ffffff;
   transform: translateY(-50%);
-  transition:
-    color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.3),
-    width var(--resize),
-    height var(--resize);
-}
-
-.site-header--scrolled .site-header__search-button {
-  width: 30px;
-  height: 30px;
+  transition: color calc(var(--fx-duration) * 0.4) ease calc(var(--fx-duration) * 0.3);
 }
 
 .site-header__search-button::before {
@@ -243,19 +160,9 @@
   border: 1.5px solid var(--color-text-primary);
   border-radius: 50%;
   color: var(--color-text-primary);
-  transition:
-    width var(--resize),
-    height var(--resize),
-    color var(--fx-t),
-    border-color var(--fx-t);
 }
 
-.site-header--scrolled .site-header__icon-link {
-  width: 36px;
-  height: 36px;
-}
-
-/* Small item count badge on the cart's top-right corner */
+/* Cart badge: the item count in a dark circle, bold and easy to read */
 .site-header__cart-badge {
   position: absolute;
   top: -6px;
@@ -264,16 +171,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
   background: var(--color-text-primary);
   border-radius: var(--radius-pill);
   box-shadow: 0 0 0 2px var(--color-canvas);
   color: var(--color-canvas);
-  font-size: 0.75rem;
+  font-size: 0.8125rem; /* 13px */
   font-weight: 700;
   line-height: 1;
+}
+
+/* Empty cart: a quiet outlined circle with a plus, no filled color */
+.site-header__cart-badge--empty {
+  padding: 0;
+  background: var(--color-canvas);
+  border: 1.5px solid var(--color-text-primary);
+  color: var(--color-text-primary);
 }
 
 /* ---------- Navigation ---------- */
@@ -282,7 +197,7 @@
   display: none;
 }
 
-/* Mobile: the menu opens as a card attached under the bar */
+/* Mobile: the menu opens as a card attached under the capsule */
 .site-header__nav--open {
   display: block;
   position: absolute;
@@ -316,7 +231,8 @@
   list-style: none;
 }
 
-/* Links keep one weight in every state: never bold */
+/* Links: regular weight in every state, no underline and no current-page marker.
+   Hovering a link dims that link (real mouse only). */
 .site-header__nav-link {
   display: flex;
   align-items: center;
@@ -325,107 +241,37 @@
   border-radius: var(--radius-input); /* shapes the keyboard focus ring */
   color: var(--color-text-body);
   font-size: var(--text-body);
-  font-weight: 500;
-  transition:
-    min-height var(--resize),
-    color var(--duration-state) var(--ease-standard),
-    opacity var(--duration-state) var(--ease-standard);
-}
-
-.site-header__nav-link:hover {
-  color: var(--color-text-primary);
+  font-weight: 400;
+  transition: opacity var(--duration-state) var(--ease-standard);
 }
 
 .site-header__nav-text {
-  position: relative;
   display: inline-block;
 }
 
-/* Underline: black, slides in on hover, keyboard focus and press, and stays on the current page */
-.site-header__nav-text::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 2px;
-  border-radius: var(--radius-pill);
-  background: var(--color-text-primary);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--duration-state) var(--ease-standard);
-}
-
-.site-header__nav-link:hover .site-header__nav-text::after,
-.site-header__nav-link:focus-visible .site-header__nav-text::after,
-.site-header__nav-link:active .site-header__nav-text::after,
-.site-header__nav-link[aria-current='page'] .site-header__nav-text::after {
-  transform: scaleX(1);
-}
-
-.site-header__nav-link[aria-current='page'] {
-  color: var(--color-text-primary);
-}
-
-/* Dim effect: while one link is hovered or focused, the others fade back */
-.site-header__nav-list:has(> li:focus-within) > li:not(:focus-within) > .site-header__nav-link {
-  opacity: 0.5;
-}
-
 @media (hover: hover) {
-  .site-header__nav-list:has(> li:hover) > li:not(:hover) > .site-header__nav-link {
-    opacity: 0.5;
+  .site-header__nav-link:hover {
+    opacity: 0.55;
   }
 }
 
 /* ---------- Desktop: one row, brand | nav | search | actions ---------- */
 
 @media (min-width: 1024px) {
-  .site-header {
-    --header-h: 78px;
-  }
-
-  .site-header--scrolled {
-    padding: 0 var(--space-6);
-  }
-
   .site-header__row {
     grid-template-columns: auto 1fr auto auto;
     grid-template-areas: 'brand nav search actions';
-    column-gap: var(--space-8);
-    padding-top: var(--space-4);
-    padding-bottom: var(--space-4);
-  }
-
-  .site-header--scrolled .site-header__row {
     column-gap: var(--space-6);
-    margin-top: var(--space-3);
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-3) 20px;
+    border-radius: 33px; /* half of the 66px height: a true capsule */
   }
 
   .site-header__menu-button {
     display: none;
   }
 
-  .site-header__logo {
-    height: 44px;
-  }
-
-  .site-header--scrolled .site-header__logo {
-    height: 32px;
-  }
-
   .site-header__search {
     width: 260px;
-    transition: width var(--resize);
-  }
-
-  .site-header--scrolled .site-header__search {
-    width: 220px;
-  }
-
-  .site-header--scrolled .site-header__nav-link {
-    min-height: 40px;
   }
 
   .site-header__nav,
@@ -446,5 +292,9 @@
   .site-header__nav-list {
     flex-direction: row;
     gap: var(--space-2);
+  }
+
+  .site-header__nav-link {
+    min-height: 40px;
   }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from 'react';
 import { Link, NavLink, useNavigate, useSearchParams } from 'react-router';
-import { Menu, Search, ShoppingCart, UserRound, X } from 'lucide-react';
+import { Menu, Plus, Search, ShoppingCart, UserRound, X } from 'lucide-react';
 import logoFull from '../../assets/logo-full.svg';
 import { selectCartCount, useCartStore } from '../../store/cartStore';
 import './Header.css';
@@ -12,9 +12,6 @@ const NAV_ITEMS = [
   { label: 'Our Story', to: '/our-story', end: false },
 ];
 
-// Scroll distance after which the bar shrinks into a pill
-const SHRINK_AFTER = 40;
-
 export default function Header() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -24,18 +21,10 @@ export default function Header() {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(() => window.scrollY > SHRINK_AFTER);
 
   // The field shows the current search (?q=). Its key changes with it, so the text
   // resets when the search changes from outside, for example "Clear search".
   const urlQuery = searchParams.get('q') ?? '';
-
-  // The header is a full-width bar at the top and a floating pill once the page has scrolled
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > SHRINK_AFTER);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   // Escape closes the mobile menu and returns focus to its button
   useEffect(() => {
@@ -84,7 +73,7 @@ export default function Header() {
   const cartLabel = `Cart, ${cartCount} ${cartCount === 1 ? 'item' : 'items'}`;
 
   return (
-    <header className={`site-header ${scrolled ? 'site-header--scrolled' : ''}`}>
+    <header className="site-header">
       <div className="site-header__row">
         <button
           ref={menuButtonRef}
@@ -155,11 +144,21 @@ export default function Header() {
           </Link>
           <Link to="/cart" className="site-header__icon-link icon-fill" aria-label={cartLabel}>
             <ShoppingCart size={20} aria-hidden="true" />
-            {cartCount > 0 && (
-              <span className="site-header__cart-badge tabular" aria-hidden="true">
-                {cartCount > 99 ? '99+' : cartCount}
-              </span>
-            )}
+            {/* Empty cart: a small outlined "+". With items: the count in a dark circle. */}
+            <span
+              className={`site-header__cart-badge tabular ${
+                cartCount === 0 ? 'site-header__cart-badge--empty' : ''
+              }`}
+              aria-hidden="true"
+            >
+              {cartCount === 0 ? (
+                <Plus size={12} strokeWidth={3} />
+              ) : cartCount > 99 ? (
+                '99+'
+              ) : (
+                cartCount
+              )}
+            </span>
           </Link>
         </div>
       </div>
