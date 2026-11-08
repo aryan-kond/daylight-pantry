@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from 'react';
 import { Link, NavLink, useNavigate, useSearchParams } from 'react-router';
-import { Menu, Plus, Search, ShoppingCart, UserRound, X } from 'lucide-react';
+import { Menu, Search, ShoppingCart, UserRound, X } from 'lucide-react';
 import logoFull from '../../assets/logo-full.svg';
 import { selectCartCount, useCartStore } from '../../store/cartStore';
 import './Header.css';
@@ -144,21 +144,16 @@ export default function Header() {
           </Link>
           <Link to="/cart" className="site-header__icon-link icon-fill" aria-label={cartLabel}>
             <ShoppingCart size={20} aria-hidden="true" />
-            {/* Empty cart: a small outlined "+". With items: the count in a dark circle. */}
-            <span
-              className={`site-header__cart-badge tabular ${
-                cartCount === 0 ? 'site-header__cart-badge--empty' : ''
-              }`}
-              aria-hidden="true"
-            >
-              {cartCount === 0 ? (
-                <Plus size={12} strokeWidth={3} />
-              ) : cartCount > 99 ? (
-                '99+'
-              ) : (
-                cartCount
-              )}
-            </span>
+            {cartCount > 0 && (
+              <span
+                className={`site-header__cart-badge tabular ${
+                  cartCount > 99 ? 'site-header__cart-badge--many' : ''
+                }`}
+                aria-hidden="true"
+              >
+                {cartCount > 99 ? '99+' : cartCount}
+              </span>
+            )}
           </Link>
         </div>
       </div>
