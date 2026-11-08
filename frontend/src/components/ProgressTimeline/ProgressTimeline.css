@@ -43,7 +43,7 @@
   padding-bottom: 0;
 }
 
-/* The ring in the section's grey makes the line look like it stops at each circle */
+/* The white ring makes the line look like it stops at each circle */
 .progress-timeline__node {
   position: absolute;
   z-index: 1;
@@ -57,7 +57,7 @@
   background: var(--color-canvas);
   border: 1.5px solid var(--color-text-primary);
   border-radius: 50%;
-  box-shadow: 0 0 0 6px var(--color-surface-soft);
+  box-shadow: 0 0 0 6px var(--color-canvas);
   color: var(--color-text-primary);
   transition:
     background-color var(--duration-drawer) var(--ease-standard),
