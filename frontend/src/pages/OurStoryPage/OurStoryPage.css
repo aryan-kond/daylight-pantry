@@ -1,85 +1,12 @@
-/* ---------- Intro: centered title and lead ---------- */
-
-.our-story__intro-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: var(--space-12) var(--gutter);
-  text-align: center;
-}
-
-.our-story__title {
-  font-size: 2.25rem; /* 36px */
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.our-story__lead {
-  max-width: 60ch;
-  margin: var(--space-4) auto 0;
-  color: var(--color-text-body);
-  font-size: 1.125rem; /* 18px */
-}
-
 .our-story__section-title {
-  font-size: 1.375rem; /* 22px */
+  font-size: 1.5rem; /* 24px */
   font-weight: 600;
   line-height: 1.3;
 }
 
-/* ---------- The shop at a glance: icon tiles, two columns on phones, two rows of four ---------- */
-
-.our-story__facts-inner {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  padding: var(--space-12) var(--gutter);
-}
-
-.our-story__facts-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-8) var(--space-4);
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-}
-
-.fact {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-  text-align: center;
-}
-
-.fact__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 72px;
-  height: 72px;
-  background: var(--color-canvas);
-  border: 1.5px solid var(--color-text-primary);
-  border-radius: 50%;
-  color: var(--color-text-primary);
-}
-
-.fact__label {
-  max-width: 16ch;
-  margin: 0;
-  color: var(--color-text-primary);
-  font-size: 0.9375rem; /* 15px */
-  font-weight: 600;
-  line-height: 1.35;
-}
-
 /* ---------- Story blocks: photo and text, alternating sides ---------- */
 
-.our-story__stories {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
+.our-story__story {
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: var(--space-12) var(--gutter);
@@ -106,6 +33,7 @@
   line-height: 1.6;
 }
 
+/* Both photos use the same frame: 4:3 landscape */
 .story-block__figure {
   overflow: hidden;
   background: var(--color-surface-soft);
@@ -116,12 +44,9 @@
   display: block;
   width: 100%;
   height: auto;
-  transition: transform var(--duration-drawer) var(--ease-standard);
-}
-
-.story-block--portrait .story-block__image {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
+  transition: transform var(--duration-drawer) var(--ease-standard);
 }
 
 @media (hover: hover) {
@@ -130,59 +55,214 @@
   }
 }
 
-/* ---------- What guides us ---------- */
+/* ---------- The little things matter ---------- */
 
-.our-story__values-inner {
+.little-things {
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: var(--space-12) var(--gutter);
 }
 
+.little-things__title {
+  margin-bottom: var(--space-8);
+  font-size: 1.75rem; /* 28px */
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* Mobile first: one card per row */
+.little-things__cards {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.little-card {
+  height: 100%;
+  padding: var(--space-3);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+}
+
+.little-card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-input);
+}
+
+.little-card__body {
+  padding: var(--space-4) var(--space-2) var(--space-2);
+}
+
+.little-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.little-card__icon {
+  flex: none;
+  color: var(--color-primary);
+}
+
+.little-card__text {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.5;
+}
+
+/* ---------- A little goodness, in every step ---------- */
+
+.little-steps {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+  padding: var(--space-8) var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+}
+
+.little-steps__title {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.steps {
+  position: relative;
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Mobile: icon on the left, title and text on the right */
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-4);
+  align-items: start;
+}
+
+.step__icon {
+  grid-row: span 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  color: #ffffff;
+}
+
+.step__title {
+  align-self: end;
+  font-size: 1rem; /* 16px */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.step__text {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.5;
+}
+
 /* ---------- Tablet and desktop ---------- */
 
-@media (min-width: 640px) {
-  .our-story__facts-grid {
+@media (min-width: 768px) {
+  .little-things__cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .little-things__cards > li > .reveal {
+    height: 100%;
+  }
+
+  .little-steps {
+    padding: var(--space-8);
+  }
+
+  /* Four steps in a row, joined by a thin line that runs behind the icons */
+  .steps {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-12) var(--space-6);
+    gap: var(--space-6);
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 23px;
+    left: calc(100% / 8);
+    right: calc(100% / 8);
+    height: 2px;
+    background: rgba(244, 123, 53, 0.35);
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    text-align: center;
+  }
+
+  .step__icon {
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 0 6px var(--color-canvas);
+  }
+
+  .step__title {
+    margin-top: var(--space-1);
+  }
+
+  .step__text {
+    margin: 0;
   }
 }
 
 @media (min-width: 960px) {
-  .our-story__intro-inner {
-    padding-top: var(--space-16);
-    padding-bottom: var(--space-16);
-  }
-
-  .our-story__title {
-    font-size: 2.5rem; /* 40px */
-  }
-
-  .our-story__facts-inner,
-  .our-story__values-inner {
-    padding-top: var(--space-16);
-    padding-bottom: var(--space-16);
-  }
-
-  .our-story__stories {
-    gap: var(--space-16);
+  .our-story__story,
+  .little-things {
     padding-top: var(--space-16);
     padding-bottom: var(--space-16);
   }
 
   .story-block {
-    gap: var(--space-12);
-  }
-
-  .story-block--landscape {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .story-block--portrait {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-12);
   }
 
   /* Photo on the left: it moves in front of the text from desktop width up */
   .story-block--image-left .story-block__figure {
     order: -1;
+  }
+}
+
+/* Heading on the left, the four steps on the right */
+@media (min-width: 1100px) {
+  .little-steps {
+    grid-template-columns: minmax(0, 3.5fr) minmax(0, 8.5fr);
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-8) var(--space-12);
   }
 }

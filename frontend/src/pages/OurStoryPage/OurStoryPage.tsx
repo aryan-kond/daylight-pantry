@@ -1,181 +1,111 @@
-import {
-  ClipboardCheck,
-  Eye,
-  IndianRupee,
-  ListChecks,
-  Package,
-  Scale,
-  Search,
-  ShoppingBasket,
-  ShoppingCart,
-  SlidersHorizontal,
-  Smartphone,
-  Sun,
-  type LucideIcon,
-} from 'lucide-react';
-import storyImage from '../../assets/our-story.webp';
-import breakfastImage from '../../assets/our-story-breakfast.webp';
-import FeaturedProducts from '../../components/FeaturedProducts/FeaturedProducts';
-import FocusPullText from '../../components/FocusPullText/FocusPullText';
-import ProgressTimeline, {
-  type TimelineItem,
-} from '../../components/ProgressTimeline/ProgressTimeline';
+import { Heart, Package, Search, ShoppingBasket, Sun, Users, Utensils } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import card1 from '../../assets/our-story/card-1.webp';
+import card2 from '../../assets/our-story/card-2.webp';
+import card3 from '../../assets/our-story/card-3.webp';
+import story1 from '../../assets/our-story/story-1.webp';
+import story2 from '../../assets/our-story/story-2.webp';
 import Reveal from '../../components/Reveal/Reveal';
-import SectionHeading from '../../components/SectionHeading/SectionHeading';
 import './OurStoryPage.css';
 
-// Paragraphs use a small letter spread so long text does not re-wrap while it settles
-const PARAGRAPH_SPREAD = '0.03em';
-
-// Plain facts about how the shop works. No health, nutrition or ingredient claims here.
-const FACTS: { label: string; Icon: LucideIcon }[] = [
-  { label: 'Pack size on every product', Icon: Package },
-  { label: 'Net weight shown up front', Icon: Scale },
-  { label: 'Prices in rupees', Icon: IndianRupee },
-  { label: 'Simple product search', Icon: Search },
-  { label: 'Quick add to cart', Icon: ShoppingCart },
-  { label: 'Quantities you can change', Icon: SlidersHorizontal },
-  { label: 'Made for phones too', Icon: Smartphone },
-  { label: 'Only confirmed details', Icon: ListChecks },
-];
-
-const VALUES: TimelineItem[] = [
-  {
-    title: 'Clear at a glance',
-    text: 'Names, pack sizes, net weights and prices are shown up front, so comparing is quick.',
-    Icon: Eye,
-  },
-  {
-    title: 'Made for every day',
-    text: 'Granola for breakfast, bars for the bag, spreads for toast. Snacks for ordinary routines.',
-    Icon: Sun,
-  },
-  {
-    title: 'Easy to shop',
-    text: 'Browse, search and add to your cart in a few taps, with quantities you can change any time.',
-    Icon: ShoppingBasket,
-  },
-  {
-    title: 'Honest details',
-    text: 'We only show product information that is confirmed, and leave out what we cannot back up.',
-    Icon: ClipboardCheck,
-  },
-];
-
 type StoryBlockProps = {
-  /** Unique name, used for the heading id and the text animations */
+  /** Unique name, used for the heading id */
   id: string;
   title: string;
   paragraphs: string[];
   image: string;
   imageAlt: string;
-  imageWidth: number;
-  imageHeight: number;
   /** Which side the photo sits on from desktop width up */
   imageSide: 'left' | 'right';
-  shape: 'landscape' | 'portrait';
 };
 
-function StoryBlock({
-  id,
-  title,
-  paragraphs,
-  image,
-  imageAlt,
-  imageWidth,
-  imageHeight,
-  imageSide,
-  shape,
-}: StoryBlockProps) {
+// Both photos are 1184 x 864, shown in identical 4:3 frames
+function StoryBlock({ id, title, paragraphs, image, imageAlt, imageSide }: StoryBlockProps) {
   return (
     <section
-      className={`story-block story-block--image-${imageSide} story-block--${shape}`}
+      className={`story-block story-block--image-${imageSide}`}
       aria-labelledby={`${id}-heading`}
     >
       <div className="story-block__text">
         <h2 id={`${id}-heading`} className="our-story__section-title">
-          <FocusPullText id={`${id}-title`} spread="0.08em">
-            {title}
-          </FocusPullText>
+          {title}
         </h2>
         {paragraphs.map((text, index) => (
-          <p key={index}>
-            <FocusPullText
-              id={`${id}-p${index}`}
-              block
-              spread={PARAGRAPH_SPREAD}
-              delay={index * 120}
-            >
-              {text}
-            </FocusPullText>
-          </p>
+          <p key={index}>{text}</p>
         ))}
       </div>
 
       <Reveal className="story-block__figure">
-        <img
-          src={image}
-          width={imageWidth}
-          height={imageHeight}
-          alt={imageAlt}
-          className="story-block__image"
-        />
+        <img src={image} width={1184} height={864} alt={imageAlt} className="story-block__image" />
       </Reveal>
     </section>
   );
 }
 
+type Card = {
+  title: string;
+  text: string;
+  image: string;
+  imageAlt: string;
+  Icon: LucideIcon;
+};
+
+const CARDS: Card[] = [
+  {
+    title: 'Everyday Goodness',
+    text: 'Celebrating the simple food moments that make every day a little better.',
+    image: card1,
+    imageAlt: 'Seed and oat bars stacked on a plate on a wooden table beside a linen cloth',
+    Icon: Sun,
+  },
+  {
+    title: 'Thoughtful Choices',
+    text: 'Making room for choices that feel right for everyday living.',
+    image: card2,
+    imageAlt:
+      'A bowl of creamy nut butter with a wooden spoon beside a slice of toast spread with it',
+    Icon: Heart,
+  },
+  {
+    title: 'Shared Moments',
+    text: 'Bringing a little more joy to the meals and moments we share.',
+    image: card3,
+    imageAlt: 'A textured bowl of granola clusters with sliced almonds on a wooden table',
+    Icon: Users,
+  },
+];
+
+const STEPS: { title: string; text: string; Icon: LucideIcon }[] = [
+  {
+    title: 'Discover',
+    text: 'Everyday food moments inspire the way we think about food.',
+    Icon: Search,
+  },
+  {
+    title: 'Choose',
+    text: 'Thoughtful choices make everyday shopping feel more meaningful.',
+    Icon: ShoppingBasket,
+  },
+  {
+    title: 'Bring Home',
+    text: 'The things we choose become part of our everyday routines.',
+    Icon: Package,
+  },
+  {
+    title: 'Share',
+    text: 'Good food becomes even better when shared.',
+    Icon: Utensils,
+  },
+];
+
 export default function OurStoryPage() {
   return (
     <div className="our-story">
-      {/* ---------- Intro ---------- */}
-      <section className="our-story__intro" aria-labelledby="our-story-heading">
-        <div className="our-story__intro-inner">
-          <h1 id="our-story-heading" className="our-story__title">
-            <FocusPullText id="our-story-title">Our story</FocusPullText>
-          </h1>
-          <p className="our-story__lead">
-            <FocusPullText id="our-story-lead" block spread={PARAGRAPH_SPREAD} delay={150}>
-              Daylight Pantry is about the everyday shelf, made easy to find, compare and enjoy. We
-              keep our range familiar, our words plain and our details honest, from the way we
-              describe a product to the way you shop.
-            </FocusPullText>
-          </p>
-        </div>
-      </section>
+      {/* Page title for screen readers and search engines; not shown on screen */}
+      <h1 className="sr-only">Our story</h1>
 
-      <hr className="section-divider" />
-
-      {/* ---------- The shop at a glance: eight icon tiles ---------- */}
-      <section className="our-story__facts" aria-labelledby="our-story-facts-heading">
-        <div className="our-story__facts-inner">
-          <SectionHeading
-            id="our-story-facts-heading"
-            title="The shop at a glance"
-            subtitle="A few simple things you can count on every time you shop."
-          />
-
-          <ul className="our-story__facts-grid">
-            {FACTS.map(({ label, Icon }, index) => (
-              <li key={label}>
-                <Reveal delay={(index % 4) * 80}>
-                  <div className="fact">
-                    <span className="fact__icon">
-                      <Icon size={28} aria-hidden="true" />
-                    </span>
-                    <p className="fact__label">{label}</p>
-                  </div>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <hr className="section-divider" />
-
-      {/* ---------- Story: two blocks, the photo alternates sides ---------- */}
-      <div className="our-story__stories">
+      {/* ---------- Story one: photo left, text right ---------- */}
+      <div className="our-story__story">
         <StoryBlock
           id="our-story-shelf"
           title="The everyday shelf"
@@ -183,14 +113,16 @@ export default function OurStoryPage() {
             'Daylight Pantry is about the oats, nuts, seeds and spreads people reach for most often. Our range sticks to familiar things: granola, oat bars, nuts and seeds, and nut butters.',
             'Nothing complicated, just the kind of food that fits into an ordinary day, whether that is breakfast at the table or a bar in your bag.',
           ]}
-          image={storyImage}
-          imageAlt="Glass jars of oats, almonds and seeds beside a bowl of granola with a wooden scoop, on a light wooden shelf"
-          imageWidth={1280}
-          imageHeight={832}
+          image={story1}
+          imageAlt="Glass jars of oats and grains on a wooden counter beside oranges, fresh bread and a canvas shopping bag in warm daylight"
           imageSide="left"
-          shape="landscape"
         />
+      </div>
 
+      <hr className="section-divider" />
+
+      {/* ---------- Story two: text left, photo right ---------- */}
+      <div className="our-story__story">
         <StoryBlock
           id="our-story-snacking"
           title="How we think about snacking"
@@ -199,32 +131,61 @@ export default function OurStoryPage() {
             'Good snacking should fit around real routines: a quick breakfast, something for the afternoon, a spread for toast. We would rather make that easy than make it complicated.',
             'That is also why we keep our words plain. If we cannot confirm something about a product, we simply leave it out.',
           ]}
-          image={breakfastImage}
-          imageAlt="A bowl of granola, a jar of nut butter with a wooden spoon and a plate of almonds on a sunlit table beside a linen napkin"
-          imageWidth={896}
-          imageHeight={1152}
+          image={story2}
+          imageAlt="Hands spreading nut butter on a slice of toast on a plate, with a bowl of berries and a glass of milk nearby"
           imageSide="right"
-          shape="portrait"
         />
       </div>
 
       <hr className="section-divider" />
 
-      {/* ---------- What guides us: progress timeline ---------- */}
-      <section className="our-story__values" aria-labelledby="our-story-values-heading">
-        <div className="our-story__values-inner">
-          <SectionHeading
-            id="our-story-values-heading"
-            title="What guides us"
-            subtitle="The ideas behind how we run the shop."
-          />
-          <ProgressTimeline items={VALUES} />
-        </div>
+      {/* ---------- The little things matter: three cards, then four steps ---------- */}
+      <section className="little-things" aria-labelledby="little-things-heading">
+        <h2 id="little-things-heading" className="little-things__title">
+          The little things matter.
+        </h2>
+
+        <ul className="little-things__cards">
+          {CARDS.map(({ title, text, image, imageAlt, Icon }, index) => (
+            <li key={title}>
+              <Reveal delay={index * 100}>
+                <article className="little-card">
+                  <img
+                    src={image}
+                    width={1000}
+                    height={571}
+                    alt={imageAlt}
+                    loading="lazy"
+                    className="little-card__image"
+                  />
+                  <div className="little-card__body">
+                    <h3 className="little-card__title">
+                      <Icon size={22} aria-hidden="true" className="little-card__icon" />
+                      {title}
+                    </h3>
+                    <p className="little-card__text">{text}</p>
+                  </div>
+                </article>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+
+        <Reveal className="little-steps">
+          <h2 className="little-steps__title">A little goodness, in every step.</h2>
+          <ol className="steps">
+            {STEPS.map(({ title, text, Icon }) => (
+              <li key={title} className="step">
+                <span className="step__icon">
+                  <Icon size={22} aria-hidden="true" />
+                </span>
+                <h3 className="step__title">{title}</h3>
+                <p className="step__text">{text}</p>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
       </section>
-
-      <hr className="section-divider" />
-
-      <FeaturedProducts />
     </div>
   );
 }
