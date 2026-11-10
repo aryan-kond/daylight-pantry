@@ -1,4 +1,4 @@
-import { Heart, Package, Search, ShoppingBasket, Sun, Users, Utensils } from 'lucide-react';
+import { Heart, Package, Search, ShoppingBasket, Smile, Sun, Utensils } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import card1 from '../../assets/our-story/card-1.webp';
 import card2 from '../../assets/our-story/card-2.webp';
@@ -71,7 +71,7 @@ const CARDS: Card[] = [
     text: 'Bringing a little more joy to the meals and moments we share.',
     image: card3,
     imageAlt: 'A textured bowl of granola clusters with sliced almonds on a wooden table',
-    Icon: Users,
+    Icon: Smile,
   },
 ];
 
@@ -139,7 +139,7 @@ export default function OurStoryPage() {
 
       <hr className="section-divider" />
 
-      {/* ---------- The little things matter: three cards, then four steps ---------- */}
+      {/* ---------- The little things matter: three cards in a row, then four steps ---------- */}
       <section className="little-things" aria-labelledby="little-things-heading">
         <h2 id="little-things-heading" className="little-things__title">
           The little things matter.
@@ -150,19 +150,21 @@ export default function OurStoryPage() {
             <li key={title}>
               <Reveal delay={index * 100}>
                 <article className="little-card">
-                  <img
-                    src={image}
-                    width={1000}
-                    height={571}
-                    alt={imageAlt}
-                    loading="lazy"
-                    className="little-card__image"
-                  />
+                  <div className="little-card__media">
+                    <img
+                      src={image}
+                      width={1000}
+                      height={571}
+                      alt={imageAlt}
+                      loading="lazy"
+                      className="little-card__image"
+                    />
+                    <span className="little-card__badge">
+                      <Icon size={22} aria-hidden="true" />
+                    </span>
+                  </div>
                   <div className="little-card__body">
-                    <h3 className="little-card__title">
-                      <Icon size={22} aria-hidden="true" className="little-card__icon" />
-                      {title}
-                    </h3>
+                    <h3 className="little-card__title">{title}</h3>
                     <p className="little-card__text">{text}</p>
                   </div>
                 </article>

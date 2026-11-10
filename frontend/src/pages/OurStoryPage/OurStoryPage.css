@@ -71,22 +71,50 @@
   text-align: center;
 }
 
-/* Mobile first: one card per row */
+/* Cards always sit in one horizontal row.
+   Phones: a swipeable row with the next card peeking in. From 640px: a three-column grid. */
 .little-things__cards {
   display: grid;
-  gap: var(--space-6);
-  margin: 0;
-  padding: 0;
+  grid-auto-flow: column;
+  grid-auto-columns: min(78%, 300px);
+  gap: var(--space-4);
+  margin: 0 calc(-1 * var(--gutter));
+  padding: var(--space-1) var(--gutter) var(--space-4);
   list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
 }
 
-.little-card {
+.little-things__cards::-webkit-scrollbar {
+  display: none;
+}
+
+.little-things__cards > li {
+  scroll-snap-align: start;
+}
+
+.little-things__cards > li > .reveal {
   height: 100%;
-  padding: var(--space-3);
+}
+
+/* Small card: photo flush with the top, a round icon badge centered on its bottom edge,
+   then a centered title and description */
+.little-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
   background: var(--color-canvas);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-overlay);
+  border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.little-card__media {
+  position: relative;
 }
 
 .little-card__image {
@@ -95,25 +123,37 @@
   height: auto;
   aspect-ratio: 3 / 2;
   object-fit: cover;
-  border-radius: var(--radius-input);
 }
 
+/* White circle with an orange icon, half over the photo and half over the text area */
+.little-card__badge {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-canvas);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 4px var(--color-canvas),
+    var(--shadow-card);
+  color: var(--color-primary);
+  transform: translateX(-50%);
+}
+
+/* Top padding clears the half of the badge that hangs below the photo */
 .little-card__body {
-  padding: var(--space-4) var(--space-2) var(--space-2);
+  flex: 1;
+  padding: 34px var(--space-4) var(--space-6);
 }
 
 .little-card__title {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
   font-size: 1.125rem; /* 18px */
   font-weight: 600;
   line-height: 1.3;
-}
-
-.little-card__icon {
-  flex: none;
-  color: var(--color-primary);
 }
 
 .little-card__text {
@@ -140,6 +180,7 @@
   font-size: 1.5rem; /* 24px */
   font-weight: 600;
   line-height: 1.3;
+  text-align: center;
 }
 
 .steps {
@@ -187,15 +228,21 @@
 
 /* ---------- Tablet and desktop ---------- */
 
-@media (min-width: 768px) {
+/* From 640px the three cards become a grid */
+@media (min-width: 640px) {
   .little-things__cards {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
   }
+}
 
-  .little-things__cards > li > .reveal {
-    height: 100%;
-  }
-
+@media (min-width: 768px) {
   .little-steps {
     padding: var(--space-8);
   }
@@ -254,15 +301,5 @@
   /* Photo on the left: it moves in front of the text from desktop width up */
   .story-block--image-left .story-block__figure {
     order: -1;
-  }
-}
-
-/* Heading on the left, the four steps on the right */
-@media (min-width: 1100px) {
-  .little-steps {
-    grid-template-columns: minmax(0, 3.5fr) minmax(0, 8.5fr);
-    align-items: center;
-    gap: var(--space-8);
-    padding: var(--space-8) var(--space-12);
   }
 }
