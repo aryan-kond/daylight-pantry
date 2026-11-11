@@ -6,7 +6,7 @@
   z-index: 50;
   display: flex;
   justify-content: center;
-  padding: 6px var(--space-3);
+  padding: 3px var(--space-3) 6px;
   /* Only the capsule takes clicks, so the page stays clickable in the margins around it */
   pointer-events: none;
 }

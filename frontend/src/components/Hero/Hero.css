@@ -1,5 +1,4 @@
 .hero {
-  background: var(--color-canvas);
   overflow: hidden;
 }
 
@@ -51,6 +50,8 @@
   width: 100%;
   max-width: none;
   height: auto;
+  /* The photo's white background lets the page gradient show through */
+  mix-blend-mode: multiply;
 }
 
 /* Desktop: text left, wide photo right */

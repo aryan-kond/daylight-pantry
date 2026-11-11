@@ -184,9 +184,11 @@ export default function Footer() {
 
   return (
     <footer className="site-footer">
-      <hr className="section-divider" />
       {/* ---------- Newsletter (soft peach band) ---------- */}
-      <section className="site-footer__newsletter" aria-labelledby="footer-newsletter-heading">
+      <section
+        className="site-footer__newsletter section-cream section-cream--open-bottom"
+        aria-labelledby="footer-newsletter-heading"
+      >
         <div className="site-footer__newsletter-inner">
           <div>
             <h2 id="footer-newsletter-heading" className="site-footer__newsletter-title">

@@ -12,7 +12,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-canvas);
+  background: linear-gradient(135deg, #fffdf8 0%, #faf6ee 50%, #f5ebdd 100%);
   color: var(--color-text-body);
   font-family: var(--font-sans);
   font-size: var(--text-body);
@@ -171,13 +171,27 @@ button {
   transform: scale(1);
 }
 
-/* Thin divider between page sections, aligned to the content width */
-.section-divider {
-  width: calc(100% - 2 * var(--gutter));
-  max-width: calc(var(--content-max-width) - 2 * var(--gutter));
-  margin: 0 auto;
-  border: 0;
-  border-top: 1px solid var(--color-border);
+/* ---------- Section bands ----------
+   The page has a gradient background. Alternate sections get a soft translucent white tint
+   that fades in and out at its top and bottom edges, so there are no hard lines.
+   (The class name is kept from the earlier cream version.)
+   The navbar always stays white and the footer stays dark. */
+.section-cream {
+  --fade-top: 72px;
+  --fade-bottom: 72px;
+  --tint: rgba(255, 255, 255, 0.55);
+  background: linear-gradient(
+    to bottom,
+    transparent 0,
+    var(--tint) var(--fade-top),
+    var(--tint) calc(100% - var(--fade-bottom)),
+    transparent 100%
+  );
+}
+
+/* For a band that runs straight into the dark footer: it only fades in at the top */
+.section-cream--open-bottom {
+  background: linear-gradient(to bottom, transparent 0, var(--tint) var(--fade-top));
 }
 
 @media (prefers-reduced-motion: reduce) {

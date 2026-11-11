@@ -28,7 +28,7 @@
 }
 
 .product-card__media {
-  aspect-ratio: 1;
+  aspect-ratio: 5 / 4;
   background: var(--color-surface-soft);
 }
 
@@ -62,20 +62,33 @@
   line-height: 1.35;
 }
 
+/* Two lines at most, so cards in a row stay the same height */
 .product-card__description {
+  display: -webkit-box;
   margin: var(--space-1) 0 0;
+  overflow: hidden;
   color: var(--color-text-secondary);
   font-size: 0.875rem; /* 14px */
   line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
-/* Price, net weight and the cart control sit at the bottom so cards in a row line up */
+/* One compact row: price and net weight on the left, the cart control on the right.
+   On narrow cards the control wraps onto its own row. */
 .product-card__footer {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
   margin-top: auto;
   padding-top: var(--space-3);
+}
+
+.product-card__buy {
+  min-width: 0;
 }
 
 .product-card__price {
@@ -93,11 +106,12 @@
   line-height: 1.4;
 }
 
-/* Add to cart: shared primary button (radial fill) sized for the card */
+/* Add to cart: the shared primary button, made compact for the card */
 .product-card__add {
-  width: 100%;
+  flex: 1 1 auto;
   min-width: 0;
-  padding: 0 var(--space-3);
+  height: 40px;
+  padding: 0 var(--space-4);
   font-size: 0.9375rem; /* 15px */
   white-space: nowrap;
 }
@@ -105,9 +119,11 @@
 /* Quantity stepper: outlined pill that replaces the Add button once the item is in the cart */
 .product-card__stepper {
   display: flex;
+  flex: 1 1 auto;
   align-items: center;
   justify-content: space-between;
-  height: 44px;
+  min-width: 112px;
+  height: 40px;
   padding: 0 var(--space-1);
   background: var(--color-canvas);
   border: 1.5px solid var(--color-text-primary);
@@ -118,8 +134,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   padding: 0;
   background: none;
   border: 0;

@@ -19,7 +19,7 @@ type StoryBlockProps = {
   imageSide: 'left' | 'right';
 };
 
-// Both photos are 1184 x 864, shown in identical 4:3 frames
+// Both photos are 1184 x 864, shown in identical 3:2 frames
 function StoryBlock({ id, title, paragraphs, image, imageAlt, imageSide }: StoryBlockProps) {
   return (
     <section
@@ -98,6 +98,8 @@ const STEPS: { title: string; text: string; Icon: LucideIcon }[] = [
   },
 ];
 
+// Alternating bands on the page gradient: plain story, tinted story, plain little things,
+// then the tinted newsletter in the footer
 export default function OurStoryPage() {
   return (
     <div className="our-story">
@@ -119,27 +121,25 @@ export default function OurStoryPage() {
         />
       </div>
 
-      <hr className="section-divider" />
-
-      {/* ---------- Story two: text left, photo right ---------- */}
-      <div className="our-story__story">
-        <StoryBlock
-          id="our-story-snacking"
-          title="How we think about snacking"
-          paragraphs={[
-            'We keep the shop simple too. Every product shows its pack size, net weight and price up front, so you can compare at a glance and know what you are getting.',
-            'Good snacking should fit around real routines: a quick breakfast, something for the afternoon, a spread for toast. We would rather make that easy than make it complicated.',
-            'That is also why we keep our words plain. If we cannot confirm something about a product, we simply leave it out.',
-          ]}
-          image={story2}
-          imageAlt="Hands spreading nut butter on a slice of toast on a plate, with a bowl of berries and a glass of milk nearby"
-          imageSide="right"
-        />
+      {/* ---------- Story two (tinted band): text left, photo right ---------- */}
+      <div className="section-cream">
+        <div className="our-story__story">
+          <StoryBlock
+            id="our-story-snacking"
+            title="How we think about snacking"
+            paragraphs={[
+              'We keep the shop simple too. Every product shows its pack size, net weight and price up front, so you can compare at a glance and know what you are getting.',
+              'Good snacking should fit around real routines: a quick breakfast, something for the afternoon, a spread for toast. We would rather make that easy than make it complicated.',
+              'That is also why we keep our words plain. If we cannot confirm something about a product, we simply leave it out.',
+            ]}
+            image={story2}
+            imageAlt="Hands spreading nut butter on a slice of toast on a plate, with a bowl of berries and a glass of milk nearby"
+            imageSide="right"
+          />
+        </div>
       </div>
 
-      <hr className="section-divider" />
-
-      {/* ---------- The little things matter: three cards in a row, then four steps ---------- */}
+      {/* ---------- The little things matter: three cards, then four steps ---------- */}
       <section className="little-things" aria-labelledby="little-things-heading">
         <h2 id="little-things-heading" className="little-things__title">
           The little things matter.
@@ -150,21 +150,21 @@ export default function OurStoryPage() {
             <li key={title}>
               <Reveal delay={index * 100}>
                 <article className="little-card">
-                  <div className="little-card__media">
-                    <img
-                      src={image}
-                      width={1000}
-                      height={571}
-                      alt={imageAlt}
-                      loading="lazy"
-                      className="little-card__image"
-                    />
-                    <span className="little-card__badge">
-                      <Icon size={22} aria-hidden="true" />
-                    </span>
-                  </div>
+                  <img
+                    src={image}
+                    width={1000}
+                    height={571}
+                    alt={imageAlt}
+                    loading="lazy"
+                    className="little-card__image"
+                  />
                   <div className="little-card__body">
-                    <h3 className="little-card__title">{title}</h3>
+                    <div className="little-card__heading">
+                      <span className="little-card__icon">
+                        <Icon size={20} aria-hidden="true" />
+                      </span>
+                      <h3 className="little-card__title">{title}</h3>
+                    </div>
                     <p className="little-card__text">{text}</p>
                   </div>
                 </article>
