@@ -47,7 +47,7 @@
 .testimonial-card__quote p {
   margin: 0;
   color: var(--color-text-body);
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.125rem; /* 18px, same as the hero pitch */
   line-height: 1.55;
 }
 

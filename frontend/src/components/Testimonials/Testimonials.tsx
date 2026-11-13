@@ -6,18 +6,18 @@ import './Testimonials.css';
 const TESTIMONIALS = [
   {
     quote:
-      'The Berry Sunrise Granola has become part of my weekday mornings. Everything was clearly listed, so ordering took just a couple of minutes.',
+      'I was surprised how easy the whole shop was to use. Everything was clearly listed, so choosing took just a couple of minutes, and the Berry Sunrise Granola has quietly become part of my weekday mornings.',
     name: 'Priya Nair',
   },
   {
     quote:
-      'I like knowing the net weight and the price before I add anything to my cart. It makes comparing products so much easier.',
+      'I like knowing the net weight and the price before I add anything to my cart. It makes comparing products so much easier, and I never have to open three tabs to work out which jar is the better value.',
     name: 'Arjun Malhotra',
   },
   {
     quote:
-      'The oat bars are perfect for my bag, and the whole shop felt simple and easy to use from start to finish.',
-    name: 'Ira Kapoor',
+      'The oat bars are perfect for my bag, and the whole shop felt simple and easy to use from start to finish. I added a few things, changed a quantity, and it all just worked without any fuss.',
+    name: 'Rohan Kapoor',
   },
 ];
 

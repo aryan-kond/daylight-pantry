@@ -1,6 +1,10 @@
 /* Standard card: white, fine border, restrained shadow */
 .product-card {
   --card-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Photo frame. With the current square photos, 16 / 10 is about as short as is safe.
+     With new landscape photos use 16 / 9 and "center". */
+  --product-image-ratio: 16 / 10;
+  --product-image-focus: center 35%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -28,7 +32,7 @@
 }
 
 .product-card__media {
-  aspect-ratio: 5 / 4;
+  aspect-ratio: var(--product-image-ratio);
   background: var(--color-surface-soft);
 }
 
@@ -37,6 +41,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: var(--product-image-focus);
 }
 
 .product-card__body {
@@ -62,33 +67,20 @@
   line-height: 1.35;
 }
 
-/* Two lines at most, so cards in a row stay the same height */
 .product-card__description {
-  display: -webkit-box;
   margin: var(--space-1) 0 0;
-  overflow: hidden;
   color: var(--color-text-secondary);
   font-size: 0.875rem; /* 14px */
   line-height: 1.45;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
 }
 
-/* One compact row: price and net weight on the left, the cart control on the right.
-   On narrow cards the control wraps onto its own row. */
+/* Price and net weight, then the cart control on its own line, so cards in a row line up */
 .product-card__footer {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2) var(--space-3);
+  flex-direction: column;
+  gap: var(--space-3);
   margin-top: auto;
   padding-top: var(--space-3);
-}
-
-.product-card__buy {
-  min-width: 0;
 }
 
 .product-card__price {
@@ -106,12 +98,11 @@
   line-height: 1.4;
 }
 
-/* Add to cart: the shared primary button, made compact for the card */
+/* Add to cart: the shared primary button, full width of the card */
 .product-card__add {
-  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
-  height: 40px;
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-3);
   font-size: 0.9375rem; /* 15px */
   white-space: nowrap;
 }
@@ -119,11 +110,9 @@
 /* Quantity stepper: outlined pill that replaces the Add button once the item is in the cart */
 .product-card__stepper {
   display: flex;
-  flex: 1 1 auto;
   align-items: center;
   justify-content: space-between;
-  min-width: 112px;
-  height: 40px;
+  height: 44px;
   padding: 0 var(--space-1);
   background: var(--color-canvas);
   border: 1.5px solid var(--color-text-primary);
@@ -134,8 +123,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   background: none;
   border: 0;

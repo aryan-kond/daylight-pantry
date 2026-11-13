@@ -114,6 +114,7 @@ export default function OurStoryPage() {
           paragraphs={[
             'Daylight Pantry is about the oats, nuts, seeds and spreads people reach for most often. Our range sticks to familiar things: granola, oat bars, nuts and seeds, and nut butters.',
             'Nothing complicated, just the kind of food that fits into an ordinary day, whether that is breakfast at the table or a bar in your bag.',
+            'A good pantry is also a flexible one. A jar of granola can be breakfast on a slow morning, a handful of nuts can fill the gap before dinner, and a spoonful of nut butter turns plain toast into something worth sitting down for.',
           ]}
           image={story1}
           imageAlt="Glass jars of oats and grains on a wooden counter beside oranges, fresh bread and a canvas shopping bag in warm daylight"
@@ -131,6 +132,7 @@ export default function OurStoryPage() {
               'We keep the shop simple too. Every product shows its pack size, net weight and price up front, so you can compare at a glance and know what you are getting.',
               'Good snacking should fit around real routines: a quick breakfast, something for the afternoon, a spread for toast. We would rather make that easy than make it complicated.',
               'That is also why we keep our words plain. If we cannot confirm something about a product, we simply leave it out.',
+              'We would rather you came back because the shop was easy to use than because we shouted about it. So we keep the pages calm, the choices few and the details clear, and we leave the rest to the food.',
             ]}
             image={story2}
             imageAlt="Hands spreading nut butter on a slice of toast on a plate, with a bowl of berries and a glass of milk nearby"
