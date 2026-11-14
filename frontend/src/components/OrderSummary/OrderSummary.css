@@ -1,0 +1,153 @@
+/* Standard card. It does not stick or scroll: it simply matches the height of the item list. */
+.order-summary {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+}
+
+.order-summary__heading {
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+}
+
+.order-summary__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.order-summary__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  color: var(--color-text-body);
+}
+
+.order-summary__row dt,
+.order-summary__row dd {
+  margin: 0;
+}
+
+.order-summary__row--discount {
+  color: var(--color-positive);
+}
+
+.order-summary__hint {
+  margin: var(--space-2) 0 var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem; /* 14px */
+}
+
+/* ---------- Promo code ---------- */
+
+.promo {
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.promo__label {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--color-text-primary);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 600;
+}
+
+.promo__row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.promo__input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 var(--space-4);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-primary);
+  font-size: var(--text-body);
+  text-transform: uppercase;
+  transition: border-color var(--duration-state) var(--ease-standard);
+}
+
+.promo__input::placeholder {
+  color: var(--color-text-secondary);
+  text-transform: none;
+}
+
+.promo__input:hover {
+  border-color: var(--color-text-muted);
+}
+
+.promo__input:focus-visible {
+  border-color: var(--color-primary);
+}
+
+.promo__input[aria-invalid='true'] {
+  border-color: var(--color-negative);
+}
+
+/* Compact version of the shared secondary button */
+.promo__apply {
+  flex: none;
+  min-width: 0;
+  padding: 0 var(--space-6);
+}
+
+/* Space is reserved for the message, so the layout does not jump when it appears */
+.promo__message {
+  min-height: 1.4em;
+  margin: var(--space-2) 0 0 var(--space-4);
+  color: var(--color-positive);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.promo__message--error {
+  color: var(--color-negative);
+}
+
+.promo__remove {
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-input);
+  color: var(--color-text-primary);
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Total and actions ---------- */
+
+.order-summary__total {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+}
+
+.order-summary__action {
+  width: 100%;
+}
+
+.order-summary__action + .order-summary__action {
+  margin-top: var(--space-3);
+}

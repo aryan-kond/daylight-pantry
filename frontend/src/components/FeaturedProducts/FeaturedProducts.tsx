@@ -6,10 +6,7 @@ import './FeaturedProducts.css';
 
 export default function FeaturedProducts() {
   return (
-    <section
-      className="featured-products section-cream"
-      aria-labelledby="featured-products-heading"
-    >
+    <section className="featured-products" aria-labelledby="featured-products-heading">
       <div className="featured-products__inner">
         <SectionHeading
           id="featured-products-heading"

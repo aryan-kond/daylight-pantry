@@ -1,6 +1,7 @@
 import { useRef, useState, type FormEvent } from 'react';
 import { Link } from 'react-router';
 import { Mail, MapPin, Phone, Play, Smartphone } from 'lucide-react';
+import SectionDivider from '../SectionDivider/SectionDivider';
 import logoFullLight from '../../assets/logo-full-light.svg';
 import './Footer.css';
 
@@ -184,11 +185,9 @@ export default function Footer() {
 
   return (
     <footer className="site-footer">
+      <SectionDivider />
       {/* ---------- Newsletter (soft peach band) ---------- */}
-      <section
-        className="site-footer__newsletter section-cream section-cream--open-bottom"
-        aria-labelledby="footer-newsletter-heading"
-      >
+      <section className="site-footer__newsletter" aria-labelledby="footer-newsletter-heading">
         <div className="site-footer__newsletter-inner">
           <div>
             <h2 id="footer-newsletter-heading" className="site-footer__newsletter-title">

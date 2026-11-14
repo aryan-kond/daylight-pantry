@@ -44,62 +44,94 @@
   font-size: 1.125rem; /* 18px */
 }
 
+/* The two cards stretch to the same height. Nothing sticks or scrolls with the screen. */
 .cart-page__layout {
   display: grid;
-  gap: var(--space-8);
+  gap: var(--space-6);
+  align-items: stretch;
 }
 
-.cart-page__list {
+/* ---------- Item list card ---------- */
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+}
+
+.cart-list__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cart-list__title {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+}
+
+.cart-list__confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  color: var(--color-text-body);
+  font-size: 0.9375rem; /* 15px */
+}
+
+/* Quiet text buttons for clearing the cart; red only on the final confirmation */
+.cart-list__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-input);
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 500;
+  transition: color var(--duration-state) var(--ease-standard);
+}
+
+.cart-list__action:hover {
+  color: var(--color-text-primary);
+}
+
+.cart-list__action--danger,
+.cart-list__action--danger:hover {
+  color: var(--color-negative);
+  font-weight: 600;
+}
+
+.cart-list__items {
+  flex: 1;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Standard card for the order summary */
-.cart-summary {
-  align-self: start;
-  padding: var(--space-6);
-  background: var(--color-canvas);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-}
-
-.cart-summary__heading {
-  margin-bottom: var(--space-4);
-  font-size: 1.125rem; /* 18px */
-  font-weight: 600;
-}
-
-.cart-summary__rows {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  margin: 0 0 var(--space-6);
-}
-
-.cart-summary__row {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-4);
-  color: var(--color-text-body);
-}
-
-.cart-summary__row dt,
-.cart-summary__row dd {
-  margin: 0;
-}
-
-.cart-summary__row--total {
-  padding-top: var(--space-3);
+.cart-list__pager {
+  margin-top: auto;
+  padding-top: var(--space-4);
   border-top: 1px solid var(--color-border);
-  color: var(--color-text-primary);
-  font-size: 1.125rem; /* 18px */
-  font-weight: 600;
 }
 
-.cart-summary__continue {
-  width: 100%;
+/* ---------- Tablet and desktop ---------- */
+
+@media (min-width: 640px) {
+  /* Room for three rows is always reserved, so the card keeps one height on every page */
+  .cart-list__items {
+    min-height: calc(3 * 105px);
+  }
 }
 
 @media (min-width: 960px) {
@@ -112,14 +144,8 @@
     font-size: 2rem; /* 32px */
   }
 
-  /* List on the left, summary stays in view on the right */
   .cart-page__layout {
-    grid-template-columns: minmax(0, 1fr) 360px;
-    gap: var(--space-12);
-  }
-
-  .cart-summary {
-    position: sticky;
-    top: 112px;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: var(--space-8);
   }
 }

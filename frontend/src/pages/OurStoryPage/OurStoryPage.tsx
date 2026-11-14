@@ -6,6 +6,7 @@ import card3 from '../../assets/our-story/card-3.webp';
 import story1 from '../../assets/our-story/story-1.webp';
 import story2 from '../../assets/our-story/story-2.webp';
 import Reveal from '../../components/Reveal/Reveal';
+import SectionDivider from '../../components/SectionDivider/SectionDivider';
 import './OurStoryPage.css';
 
 type StoryBlockProps = {
@@ -121,9 +122,9 @@ export default function OurStoryPage() {
           imageSide="left"
         />
       </div>
-
-      {/* ---------- Story two (tinted band): text left, photo right ---------- */}
-      <div className="section-cream">
+      <SectionDivider />
+      {/* ---------- Story two: text left, photo right ---------- */}
+      <div>
         <div className="our-story__story">
           <StoryBlock
             id="our-story-snacking"
@@ -140,7 +141,7 @@ export default function OurStoryPage() {
           />
         </div>
       </div>
-
+      <SectionDivider />
       {/* ---------- The little things matter: three cards, then four steps ---------- */}
       <section className="little-things" aria-labelledby="little-things-heading">
         <h2 id="little-things-heading" className="little-things__title">

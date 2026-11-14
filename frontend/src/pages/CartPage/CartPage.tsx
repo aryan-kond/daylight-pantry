@@ -1,16 +1,25 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
+import { Trash2 } from 'lucide-react';
 import { PRODUCTS, type Product } from '../../data/products';
 import { useCartStore } from '../../store/cartStore';
-import { formatPrice } from '../../utils/formatPrice';
 import CartItem from '../../components/CartItem/CartItem';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
+import Pagination from '../../components/Pagination/Pagination';
 import './CartPage.css';
+
+/** Items shown per page. More than this and the pager appears. */
+const PAGE_SIZE = 3;
 
 export default function CartPage() {
   const quantities = useCartStore((state) => state.quantities);
   const removeItem = useCartStore((state) => state.removeItem);
+  const clearCart = useCartStore((state) => state.clearCart);
 
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const clearButtonRef = useRef<HTMLButtonElement>(null);
+  const [page, setPage] = useState(1);
+  const [confirmingClear, setConfirmingClear] = useState(false);
   const [message, setMessage] = useState('');
 
   // Products in the cart, in catalogue order
@@ -21,11 +30,29 @@ export default function CartPage() {
   const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0);
   const subtotal = lines.reduce((sum, line) => sum + line.product.price * line.quantity, 0);
 
+  const pageCount = Math.max(1, Math.ceil(lines.length / PAGE_SIZE));
+  const currentPage = Math.min(page, pageCount);
+  const visibleLines = lines.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   // After a removal the row disappears, so announce it and move focus to the page title
   const handleRemove = (product: Product) => {
     removeItem(product.id);
     setMessage(`${product.name} removed from cart`);
     headingRef.current?.focus();
+  };
+
+  const handleConfirmClear = () => {
+    clearCart();
+    setConfirmingClear(false);
+    setPage(1);
+    setMessage('Cart cleared');
+    headingRef.current?.focus();
+  };
+
+  const handleCancelClear = () => {
+    setConfirmingClear(false);
+    // Focus returns on the next frame, once the Clear cart button is back on screen
+    requestAnimationFrame(() => clearButtonRef.current?.focus());
   };
 
   return (
@@ -56,35 +83,63 @@ export default function CartPage() {
         </div>
       ) : (
         <div className="cart-page__layout">
-          <ul className="cart-page__list">
-            {lines.map(({ product, quantity }) => (
-              <CartItem
-                key={product.id}
-                product={product}
-                quantity={quantity}
-                onRemove={handleRemove}
-              />
-            ))}
-          </ul>
+          <section className="cart-list" aria-labelledby="cart-items-heading">
+            <div className="cart-list__header">
+              <h2 id="cart-items-heading" className="cart-list__title">
+                Items
+              </h2>
 
-          <aside className="cart-summary" aria-labelledby="cart-summary-heading">
-            <h2 id="cart-summary-heading" className="cart-summary__heading">
-              Order summary
-            </h2>
-            <dl className="cart-summary__rows">
-              <div className="cart-summary__row">
-                <dt>Items</dt>
-                <dd className="tabular">{itemCount}</dd>
+              {confirmingClear ? (
+                <div className="cart-list__confirm" role="group" aria-label="Confirm clearing cart">
+                  <span>Remove all items?</span>
+                  <button type="button" className="cart-list__action" onClick={handleCancelClear}>
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="cart-list__action cart-list__action--danger"
+                    onClick={handleConfirmClear}
+                  >
+                    Yes, clear cart
+                  </button>
+                </div>
+              ) : (
+                <button
+                  ref={clearButtonRef}
+                  type="button"
+                  className="cart-list__action"
+                  onClick={() => setConfirmingClear(true)}
+                >
+                  <Trash2 size={16} aria-hidden="true" />
+                  Clear cart
+                </button>
+              )}
+            </div>
+
+            <ul className="cart-list__items">
+              {visibleLines.map(({ product, quantity }) => (
+                <CartItem
+                  key={product.id}
+                  product={product}
+                  quantity={quantity}
+                  onRemove={handleRemove}
+                />
+              ))}
+            </ul>
+
+            {pageCount > 1 && (
+              <div className="cart-list__pager">
+                <Pagination
+                  page={currentPage}
+                  pageCount={pageCount}
+                  onChange={setPage}
+                  label="Cart item pages"
+                />
               </div>
-              <div className="cart-summary__row cart-summary__row--total">
-                <dt>Subtotal</dt>
-                <dd className="tabular">{formatPrice(subtotal)}</dd>
-              </div>
-            </dl>
-            <Link to="/products" className="button-secondary cart-summary__continue">
-              Continue shopping
-            </Link>
-          </aside>
+            )}
+          </section>
+
+          <OrderSummary itemCount={itemCount} subtotal={subtotal} />
         </div>
       )}
     </div>

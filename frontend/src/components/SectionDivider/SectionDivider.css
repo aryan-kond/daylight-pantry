@@ -1,0 +1,35 @@
+.divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 2 * var(--gutter));
+  max-width: calc(var(--content-max-width) - 2 * var(--gutter));
+  height: 28px;
+  margin: 0 auto;
+}
+
+/* The line is a little darker than our usual border, so it reads clearly */
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: #cbd5e1;
+}
+
+/* White circle that cuts the line, with the sun inside */
+.divider__mark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--color-canvas);
+  border: 1px solid #cbd5e1;
+  border-radius: 50%;
+  color: var(--color-primary);
+}
