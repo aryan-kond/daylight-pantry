@@ -1,0 +1,196 @@
+.article-page {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter) var(--space-12);
+}
+
+.article-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
+  border-radius: var(--radius-input); /* shapes the keyboard focus ring */
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 500;
+  transition: color var(--duration-state) var(--ease-standard);
+}
+
+.article-page__back:hover {
+  color: var(--color-text-primary);
+}
+
+.article-page__center {
+  display: flex;
+  justify-content: center;
+}
+
+.article-page__figure {
+  max-width: 880px;
+  margin: 0 auto var(--space-8);
+  overflow: hidden;
+  background: var(--color-surface-soft);
+  border-radius: var(--radius-overlay);
+}
+
+.article-page__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* ---------- Reading column ---------- */
+
+.article-page__body {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.article-page__text {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text-body);
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.7;
+}
+
+.article-page__section {
+  margin-top: var(--space-8);
+}
+
+.article-page__subheading {
+  margin-bottom: var(--space-4);
+  font-size: 1.375rem; /* 22px */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Lists: orange dots for ingredients, numbered peach circles for steps */
+.article-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.article-list li {
+  position: relative;
+  padding-left: var(--space-8);
+  color: var(--color-text-body);
+  font-size: 1.0625rem; /* 17px */
+  line-height: 1.6;
+}
+
+.article-list:not(.article-list--steps) li::before {
+  content: '';
+  position: absolute;
+  top: 0.65em;
+  left: 10px;
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
+  border-radius: 50%;
+}
+
+.article-list--steps li {
+  counter-increment: step;
+}
+
+.article-list--steps li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--color-primary-tint);
+  border-radius: 50%;
+  color: var(--color-text-primary);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* ---------- Pantry tip ---------- */
+
+.article-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+}
+
+.article-tip__icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-canvas);
+  border-radius: 50%;
+  box-shadow: var(--shadow-overlay);
+  color: var(--color-primary);
+}
+
+.article-tip__title {
+  font-size: 1rem; /* 16px */
+  font-weight: 600;
+}
+
+.article-tip__text {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-body);
+  font-size: 1rem; /* 16px */
+  line-height: 1.6;
+}
+
+/* ---------- Keep reading ---------- */
+
+.article-more {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-12) var(--gutter);
+}
+
+.article-more__grid {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0 0 var(--space-8);
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .article-more__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .article-page {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-16);
+  }
+
+  .article-more {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+
+  .article-more__grid {
+    gap: var(--space-8);
+  }
+}

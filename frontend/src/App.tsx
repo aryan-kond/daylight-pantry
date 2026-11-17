@@ -6,6 +6,8 @@ import HomePage from './pages/HomePage/HomePage';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
 import CartPage from './pages/CartPage/CartPage';
 import OurStoryPage from './pages/OurStoryPage/OurStoryPage';
+import JournalPage from './pages/JournalPage/JournalPage';
+import ArticlePage from './pages/ArticlePage/ArticlePage';
 import './App.css';
 
 export default function App() {
@@ -22,6 +24,8 @@ export default function App() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/our-story" element={<OurStoryPage />} />
+          <Route path="/journal" element={<JournalPage />} />
+          <Route path="/journal/:slug" element={<ArticlePage />} />
         </Routes>
       </main>
       <Footer />

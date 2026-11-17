@@ -102,7 +102,7 @@ const COLUMNS: FooterColumn[] = [
       { label: 'Our Story', to: '/our-story' },
       { label: 'Careers' },
       { label: 'Press' },
-      { label: 'Blog' },
+      { label: 'Goodness Journal', to: '/journal' },
       { label: 'Partnerships' },
     ],
   },

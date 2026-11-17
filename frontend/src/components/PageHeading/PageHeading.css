@@ -1,0 +1,35 @@
+.page-heading {
+  margin-bottom: var(--space-8);
+  text-align: center;
+}
+
+.page-heading__title {
+  font-size: 1.75rem; /* 28px */
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* The title can take focus after an action; it needs no ring for that */
+.page-heading__title:focus {
+  outline: none;
+}
+
+.page-heading__subtitle {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+}
+
+.page-heading__extra {
+  margin-top: var(--space-3);
+}
+
+@media (min-width: 960px) {
+  .page-heading {
+    margin-bottom: var(--space-12);
+  }
+
+  .page-heading__title {
+    font-size: 2.25rem; /* 36px */
+  }
+}

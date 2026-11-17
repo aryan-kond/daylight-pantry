@@ -1,0 +1,111 @@
+.journal-page {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter) var(--space-12);
+}
+
+/* ---------- Featured article: photo and text ---------- */
+
+.journal-feature {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.journal-feature__figure {
+  overflow: hidden;
+  background: var(--color-surface-soft);
+  border-radius: var(--radius-overlay);
+}
+
+.journal-feature__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.journal-feature__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.journal-feature__meta {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500;
+}
+
+.journal-feature__title {
+  margin-top: var(--space-2);
+  font-size: 1.75rem; /* 28px */
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.journal-feature__teaser {
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-body);
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.6;
+}
+
+.journal-feature__action {
+  margin-top: var(--space-6);
+}
+
+/* ---------- More articles ---------- */
+
+.journal-more {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-12) var(--gutter);
+}
+
+/* Mobile first: one card per row */
+.journal-grid {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .journal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .journal-page {
+    padding-bottom: var(--space-16);
+  }
+
+  .journal-feature {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-12);
+  }
+
+  .journal-more {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+
+  /* Three cards per row. With five cards, the last two sit centered under the first row. */
+  .journal-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-8);
+  }
+
+  .journal-grid > li {
+    grid-column: span 2;
+  }
+
+  .journal-grid > li:nth-child(4):nth-last-child(2) {
+    grid-column: 2 / span 2;
+  }
+}
