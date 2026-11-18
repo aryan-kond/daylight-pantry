@@ -55,20 +55,27 @@ export default function ArticlePage() {
         </figure>
 
         <div className="article-page__body">
-          {article.intro.map((text, index) => (
-            <p key={index} className="article-page__text">
+          {article.intro.map((text, paragraphIndex) => (
+            <p key={paragraphIndex} className="article-page__text">
               {text}
             </p>
           ))}
 
           {article.lists.map((list) => {
+            // "How to ..." lists are method steps and read "Step 1", "Step 2".
+            // Other ordered lists get plain numbers, and unordered lists get dots.
+            const isMethod = list.ordered && list.title.toLowerCase().startsWith('how to');
             const ListTag = list.ordered ? 'ol' : 'ul';
+            const listClass = !list.ordered
+              ? 'article-list'
+              : isMethod
+                ? 'article-list article-list--steps'
+                : 'article-list article-list--numbered';
+
             return (
               <section key={list.title} className="article-page__section">
                 <h2 className="article-page__subheading">{list.title}</h2>
-                <ListTag
-                  className={list.ordered ? 'article-list article-list--steps' : 'article-list'}
-                >
+                <ListTag className={listClass}>
                   {list.items.map((item) => (
                     <li key={item}>{item}</li>
                   ))}

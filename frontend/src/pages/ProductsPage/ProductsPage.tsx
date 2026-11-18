@@ -1,5 +1,6 @@
 import { Link, useSearchParams } from 'react-router';
 import { PRODUCTS, type Product } from '../../data/products';
+import PageHeading from '../../components/PageHeading/PageHeading';
 import ProductGrid from '../../components/ProductGrid/ProductGrid';
 import './ProductsPage.css';
 
@@ -22,17 +23,16 @@ export default function ProductsPage() {
 
   return (
     <div className="products-page">
-      <header className="products-page__header">
-        <h1 className="products-page__title">{query ? 'Search results' : 'Products'}</h1>
-        <p className="products-page__summary" role="status">
-          {query ? `${countLabel} for “${query}”` : countLabel}
-        </p>
+      <PageHeading
+        title={query ? 'Search results' : 'Products'}
+        subtitle={query ? `${countLabel} for “${query}”` : countLabel}
+      >
         {query && (
           <Link to="/products" className="products-page__clear">
             Clear search
           </Link>
         )}
-      </header>
+      </PageHeading>
 
       {results.length > 0 ? (
         <ProductGrid products={results} columns={4} />

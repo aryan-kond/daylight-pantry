@@ -5,6 +5,7 @@ import { PRODUCTS, type Product } from '../../data/products';
 import { useCartStore } from '../../store/cartStore';
 import CartItem from '../../components/CartItem/CartItem';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
+import PageHeading from '../../components/PageHeading/PageHeading';
 import Pagination from '../../components/Pagination/Pagination';
 import './CartPage.css';
 
@@ -57,16 +58,13 @@ export default function CartPage() {
 
   return (
     <div className="cart-page">
-      <header className="cart-page__header">
-        <h1 ref={headingRef} tabIndex={-1} className="cart-page__title">
-          Your cart
-        </h1>
-        {lines.length > 0 && (
-          <p className="cart-page__count">
-            {itemCount} {itemCount === 1 ? 'item' : 'items'}
-          </p>
-        )}
-      </header>
+      <PageHeading
+        title="Your cart"
+        subtitle={
+          lines.length > 0 ? `${itemCount} ${itemCount === 1 ? 'item' : 'items'}` : undefined
+        }
+        headingRef={headingRef}
+      />
 
       <p className="sr-only" role="status">
         {message}
