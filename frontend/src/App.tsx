@@ -9,6 +9,7 @@ import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 import OurStoryPage from './pages/OurStoryPage/OurStoryPage';
 import JournalPage from './pages/JournalPage/JournalPage';
 import ArticlePage from './pages/ArticlePage/ArticlePage';
+import ContactPage from './pages/ContactPage/ContactPage';
 import './App.css';
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/our-story" element={<OurStoryPage />} />
           <Route path="/journal" element={<JournalPage />} />
           <Route path="/journal/:slug" element={<ArticlePage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
       <Footer />
