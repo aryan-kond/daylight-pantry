@@ -1,0 +1,169 @@
+.checkout-page {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter) var(--space-12);
+}
+
+/* Empty cart: centered message and one clear action */
+.checkout-page__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-8) 0;
+  text-align: center;
+}
+
+.checkout-page__empty-text {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--color-text-body);
+  font-size: 1.125rem; /* 18px */
+}
+
+/* Form on the left, order preview on the right. Neither one sticks or scrolls on its own. */
+.checkout-page__layout {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+/* "Some details need attention" notice at the top of the form */
+.checkout-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-negative-tint);
+  border: 1px solid var(--color-negative);
+  border-radius: var(--radius-input);
+  color: var(--color-text-primary);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.checkout-alert svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--color-negative);
+}
+
+/* ---------- Form cards ---------- */
+
+.checkout-card {
+  padding: var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+}
+
+.checkout-card__title {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+}
+
+.checkout-card__intro {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+}
+
+.checkout-card__grid {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+/* ---------- Payment options ---------- */
+
+.checkout-pay {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.pay-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-state) var(--ease-standard),
+    background-color var(--duration-state) var(--ease-standard);
+}
+
+.pay-option:hover {
+  border-color: var(--color-text-muted);
+}
+
+/* The filled radio dot shows the choice; the orange border and tint support it */
+.pay-option--selected,
+.pay-option--selected:hover {
+  background: var(--color-primary-tint);
+  border-color: var(--color-primary);
+}
+
+.pay-option:has(input:focus-visible) {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.pay-option input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  accent-color: var(--color-primary);
+}
+
+.pay-option__title {
+  display: block;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.pay-option__text {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+}
+
+/* ---------- Tablet and desktop ---------- */
+
+@media (min-width: 640px) {
+  .checkout-card__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .form-field--wide {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 960px) {
+  .checkout-page {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-16);
+  }
+
+  .checkout-page__layout {
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: var(--space-8);
+  }
+}

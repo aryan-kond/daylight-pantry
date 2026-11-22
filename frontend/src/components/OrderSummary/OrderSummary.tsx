@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router';
+import { useCartStore } from '../../store/cartStore';
 import { FREE_DELIVERY_FROM, PROMO_CODES, getTotals } from '../../utils/cartPricing';
 import { formatPrice } from '../../utils/formatPrice';
 import './OrderSummary.css';
@@ -11,10 +12,14 @@ type OrderSummaryProps = {
 
 export default function OrderSummary({ itemCount, subtotal }: OrderSummaryProps) {
   const [code, setCode] = useState('');
-  const [appliedCode, setAppliedCode] = useState<string | null>(null);
   const [error, setError] = useState('');
 
-  const discountRate = appliedCode ? PROMO_CODES[appliedCode] : 0;
+  // The applied code lives in the cart store, so checkout shows the same total
+  const appliedCode = useCartStore((state) => state.promoCode);
+  const applyPromo = useCartStore((state) => state.applyPromo);
+  const removePromo = useCartStore((state) => state.removePromo);
+
+  const discountRate = appliedCode ? (PROMO_CODES[appliedCode] ?? 0) : 0;
   const { discount, deliveryFee, total } = getTotals(subtotal, discountRate);
 
   const handleApply = (event: FormEvent<HTMLFormElement>) => {
@@ -26,14 +31,14 @@ export default function OrderSummary({ itemCount, subtotal }: OrderSummaryProps)
     } else if (!(entered in PROMO_CODES)) {
       setError('That code is not valid. Check it and try again.');
     } else {
-      setAppliedCode(entered);
+      applyPromo(entered);
       setCode('');
       setError('');
     }
   };
 
   const handleRemovePromo = () => {
-    setAppliedCode(null);
+    removePromo();
     setError('');
   };
 

@@ -6,16 +6,21 @@ export const MAX_QUANTITY = 99;
 type CartState = {
   /** Quantity in the cart for each product id. Products with 0 are removed. */
   quantities: Record<string, number>;
+  /** Promo code applied in the cart. Kept here so checkout shows the same total. */
+  promoCode: string | null;
   addItem: (productId: string) => void;
   decreaseItem: (productId: string) => void;
   removeItem: (productId: string) => void;
   clearCart: () => void;
+  applyPromo: (code: string) => void;
+  removePromo: () => void;
 };
 
 export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       quantities: {},
+      promoCode: null,
 
       addItem: (productId) =>
         set((state) => ({
@@ -44,7 +49,11 @@ export const useCartStore = create<CartState>()(
           return { quantities };
         }),
 
-      clearCart: () => set({ quantities: {} }),
+      clearCart: () => set({ quantities: {}, promoCode: null }),
+
+      applyPromo: (code) => set({ promoCode: code }),
+
+      removePromo: () => set({ promoCode: null }),
     }),
     { name: 'daylight-pantry-cart' },
   ),

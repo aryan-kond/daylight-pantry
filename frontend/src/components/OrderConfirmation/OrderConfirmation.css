@@ -1,0 +1,89 @@
+.order-confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.order-confirmation__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: var(--color-positive-tint, #e6f4ec);
+  border-radius: 50%;
+  color: var(--color-positive);
+}
+
+/* The words "Order confirmed" carry the meaning along with the green icon */
+.order-confirmation__status {
+  margin-top: var(--space-4);
+  color: var(--color-positive);
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+}
+
+.order-confirmation__number {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-body);
+  font-size: 1.0625rem; /* 17px */
+}
+
+.order-confirmation__number strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.order-confirmation__details {
+  width: 100%;
+  margin: var(--space-6) 0 0;
+  border-top: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.order-confirmation__details > div {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.order-confirmation__details dt {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+}
+
+.order-confirmation__details dd {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.order-confirmation__line {
+  display: block;
+  color: var(--color-text-body);
+  font-weight: 400;
+}
+
+.order-confirmation__note {
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+}
+
+.order-confirmation__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
