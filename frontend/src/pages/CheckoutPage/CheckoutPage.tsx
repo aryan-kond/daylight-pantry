@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link } from 'react-router';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Banknote, Check, CreditCard, type LucideIcon } from 'lucide-react';
 import { PRODUCTS } from '../../data/products';
 import { useCartStore } from '../../store/cartStore';
 import { PROMO_CODES, getTotals } from '../../utils/cartPricing';
@@ -22,11 +22,17 @@ import OrderConfirmation, {
   type CompletedOrder,
 } from '../../components/OrderConfirmation/OrderConfirmation';
 import PageHeading from '../../components/PageHeading/PageHeading';
+import Select from '../../components/Select/Select';
 import './CheckoutPage.css';
 
-const PAYMENT_OPTIONS: { value: PaymentMethod; title: string; text: string }[] = [
-  { value: 'online', title: 'Pay online', text: 'Pay by UPI, card or net banking.' },
-  { value: 'cod', title: 'Cash on delivery', text: 'Pay when your order arrives.' },
+const PAYMENT_OPTIONS: { value: PaymentMethod; title: string; text: string; Icon: LucideIcon }[] = [
+  {
+    value: 'online',
+    title: 'Pay online',
+    text: 'Pay by UPI, card or net banking.',
+    Icon: CreditCard,
+  },
+  { value: 'cod', title: 'Cash on delivery', text: 'Pay when your order arrives.', Icon: Banknote },
 ];
 
 export default function CheckoutPage() {
@@ -57,24 +63,23 @@ export default function CheckoutPage() {
 
   const errorCount = FIELD_ORDER.filter((field) => errors[field]).length;
 
-  const setField =
-    (field: FieldName) => (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const next = { ...values, [field]: event.target.value };
-      setValues(next);
-      // Once a field shows an error, re-check it as the person types so the message clears when fixed
-      if (errors[field]) {
-        setErrors((previous) => ({ ...previous, [field]: validateField(field, next) }));
-      }
-    };
+  const updateField = (field: FieldName, value: string) => {
+    const next = { ...values, [field]: value };
+    setValues(next);
+    // Once a field shows an error, re-check it as the person types so the message clears when fixed
+    if (errors[field]) {
+      setErrors((previous) => ({ ...previous, [field]: validateField(field, next) }));
+    }
+  };
 
   const checkField = (field: FieldName) => () => {
     setErrors((previous) => ({ ...previous, [field]: validateField(field, values) }));
   };
 
-  // Props shared by every text input and select
+  // Props shared by every text input
   const inputProps = (field: FieldName) => ({
     value: values[field],
-    onChange: setField(field),
+    onChange: (event: ChangeEvent<HTMLInputElement>) => updateField(field, event.target.value),
     onBlur: checkField(field),
   });
 
@@ -199,7 +204,6 @@ export default function CheckoutPage() {
                     {...inputProps('email')}
                     type="email"
                     autoComplete="email"
-                    placeholder="name@example.com"
                     className="form-control"
                   />
                 )}
@@ -263,19 +267,14 @@ export default function CheckoutPage() {
 
               <FormField id="checkout-state" label="State" error={errors.state}>
                 {(control) => (
-                  <select
+                  <Select
                     {...control}
-                    {...inputProps('state')}
-                    autoComplete="address-level1"
-                    className="form-control"
-                  >
-                    <option value="">Choose your state</option>
-                    {INDIAN_STATES.map((state) => (
-                      <option key={state} value={state}>
-                        {state}
-                      </option>
-                    ))}
-                  </select>
+                    value={values.state}
+                    options={INDIAN_STATES}
+                    placeholder="Choose your state"
+                    onChange={(value) => updateField('state', value)}
+                    onBlur={checkField('state')}
+                  />
                 )}
               </FormField>
 
@@ -300,8 +299,11 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          {/* Payment method */}
-          <section className="checkout-card" aria-labelledby="checkout-payment-title">
+          {/* Payment method: the last card, so it lines up with the bottom of the order summary */}
+          <section
+            className="checkout-card checkout-card--payment"
+            aria-labelledby="checkout-payment-title"
+          >
             <h2 id="checkout-payment-title" className="checkout-card__title">
               Payment method
             </h2>
@@ -310,24 +312,35 @@ export default function CheckoutPage() {
               role="radiogroup"
               aria-labelledby="checkout-payment-title"
             >
-              {PAYMENT_OPTIONS.map((option) => (
-                <label
-                  key={option.value}
-                  className={`pay-option ${values.payment === option.value ? 'pay-option--selected' : ''}`}
-                >
-                  <input
-                    type="radio"
-                    name="payment"
-                    value={option.value}
-                    checked={values.payment === option.value}
-                    onChange={() => setValues({ ...values, payment: option.value })}
-                  />
-                  <span>
-                    <span className="pay-option__title">{option.title}</span>
-                    <span className="pay-option__text">{option.text}</span>
-                  </span>
-                </label>
-              ))}
+              {PAYMENT_OPTIONS.map(({ value, title, text, Icon }) => {
+                const selected = values.payment === value;
+                return (
+                  <label
+                    key={value}
+                    className={`pay-option ${selected ? 'pay-option--selected' : ''}`}
+                  >
+                    {/* A real radio input, visually hidden, so keyboard and screen readers work */}
+                    <input
+                      type="radio"
+                      name="payment"
+                      value={value}
+                      checked={selected}
+                      onChange={() => setValues({ ...values, payment: value })}
+                      className="pay-option__input"
+                    />
+                    <span className="pay-option__icon">
+                      <Icon size={22} aria-hidden="true" />
+                    </span>
+                    <span className="pay-option__body">
+                      <span className="pay-option__title">{title}</span>
+                      <span className="pay-option__text">{text}</span>
+                    </span>
+                    <span className="pay-option__check" aria-hidden="true">
+                      <Check size={14} strokeWidth={3} />
+                    </span>
+                  </label>
+                );
+              })}
             </div>
           </section>
         </form>

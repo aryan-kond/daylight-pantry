@@ -1,4 +1,5 @@
-/* Standard card. It does not stick or scroll with the page. */
+/* Standard card. It does not stick or scroll with the page.
+   On desktop it stretches to the height of the form next to it. */
 .checkout-summary {
   display: flex;
   flex-direction: column;
@@ -77,11 +78,19 @@
   text-align: right;
 }
 
+/* Totals and the Place order button. margin-top: auto pushes them to the bottom of the card. */
+.checkout-summary__bottom {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  padding-top: var(--space-4);
+}
+
 .checkout-summary__rows {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  margin: var(--space-4) 0 0;
+  margin: 0;
 }
 
 .checkout-summary__row {
@@ -133,6 +142,14 @@
   color: var(--color-negative);
 }
 
+.checkout-summary__note {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: 0.8125rem; /* 13px */
+  text-align: center;
+}
+
+/* The last thing in the card, so its bottom edge lines up with the payment options */
 .checkout-summary__submit {
   width: 100%;
 }
@@ -140,11 +157,4 @@
 .checkout-summary__submit:disabled {
   cursor: progress;
   opacity: 0.8;
-}
-
-.checkout-summary__note {
-  margin: var(--space-3) 0 0;
-  color: var(--color-text-secondary);
-  font-size: 0.8125rem; /* 13px */
-  text-align: center;
 }
