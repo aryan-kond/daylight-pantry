@@ -8,6 +8,9 @@ type QuantityStepperProps = {
   quantity: number;
   onDecrease: () => void;
   onIncrease: () => void;
+  /** Lowest allowed quantity. Minus is greyed out there. Leave it out in the cart,
+   *  where minus at 1 removes the item. */
+  min?: number;
 };
 
 export default function QuantityStepper({
@@ -15,6 +18,7 @@ export default function QuantityStepper({
   quantity,
   onDecrease,
   onIncrease,
+  min = 0,
 }: QuantityStepperProps) {
   return (
     <div className="quantity-stepper" role="group" aria-label={`Quantity of ${name}`}>
@@ -22,6 +26,7 @@ export default function QuantityStepper({
         type="button"
         className="quantity-stepper__button"
         aria-label={`Decrease quantity of ${name}`}
+        disabled={min > 0 && quantity <= min}
         onClick={onDecrease}
       >
         <Minus size={16} aria-hidden="true" />

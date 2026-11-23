@@ -159,3 +159,37 @@
     padding: var(--space-4);
   }
 }
+
+/* The product name is a link that stretches over the whole card, so the whole card opens
+   the product page. The cart controls sit above it and keep working on their own. */
+.product-card__link {
+  color: inherit;
+}
+
+.product-card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.product-card__link:focus-visible {
+  outline: none;
+}
+
+.product-card:has(.product-card__link:focus-visible) {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .product-card:hover .product-card__link {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.product-card__add,
+.product-card__stepper {
+  position: relative;
+  z-index: 1;
+}

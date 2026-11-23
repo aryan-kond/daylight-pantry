@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router';
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { MAX_QUANTITY, useCartStore } from '../../store/cartStore';
 import { formatPrice } from '../../utils/formatPrice';
@@ -52,7 +53,12 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <div className="product-card__body">
         <p className="product-card__category">{category}</p>
-        <h3 className="product-card__name">{name}</h3>
+        <h3 className="product-card__name">
+          {/* This link stretches over the whole card, so clicking anywhere opens the product page */}
+          <Link to={`/products/${id}`} className="product-card__link">
+            {name}
+          </Link>
+        </h3>
         <p className="product-card__description">{description}</p>
 
         <div className="product-card__footer">

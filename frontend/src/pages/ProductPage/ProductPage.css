@@ -1,0 +1,195 @@
+.product-page {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter) var(--space-12);
+}
+
+.product-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
+  border-radius: var(--radius-input); /* shapes the keyboard focus ring */
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 500;
+  transition: color var(--duration-state) var(--ease-standard);
+}
+
+.product-page__back:hover {
+  color: var(--color-text-primary);
+}
+
+.product-page__center {
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile first: photo, then the buy panel and details */
+.product-detail {
+  display: grid;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.product-detail__figure {
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-surface-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+}
+
+.product-detail__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.product-detail__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-width: 0;
+}
+
+/* ---------- Price, quantity and Add to cart ---------- */
+
+.product-buy__price {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 1.75rem; /* 28px */
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.product-buy__weight {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+}
+
+.product-buy__description {
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-body);
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.6;
+}
+
+.product-buy__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.product-buy__quantity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.product-buy__label {
+  padding-left: var(--space-4);
+  color: var(--color-text-primary);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 600;
+}
+
+/* Space is kept for the message, so nothing jumps when it appears */
+.product-buy__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 1.5rem;
+  margin: var(--space-3) 0 0;
+  color: var(--color-positive);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 500;
+}
+
+.product-buy__status svg {
+  flex: none;
+}
+
+.product-buy__status a {
+  border-radius: var(--radius-input); /* shapes the keyboard focus ring */
+  color: var(--color-text-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Product details card ---------- */
+
+.product-facts {
+  padding: var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+}
+
+.product-facts__title {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+}
+
+.product-facts__list {
+  margin: var(--space-4) 0 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.product-facts__list > div {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.product-facts__list dt {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+}
+
+.product-facts__list dd {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.product-facts__note {
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.5;
+}
+
+/* ---------- You may also like ---------- */
+
+.product-related {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-12) var(--gutter);
+}
+
+@media (min-width: 960px) {
+  .product-page {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-16);
+  }
+
+  .product-detail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-12);
+  }
+
+  .product-related {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+}
