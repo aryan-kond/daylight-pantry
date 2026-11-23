@@ -194,7 +194,11 @@ export default function ContactPage() {
             </li>
           </ul>
 
-          <MapPlaceholder title="Daylight Pantry" address={CONTACT.address.join(', ')} />
+          <MapPlaceholder
+            title="Daylight Pantry"
+            address={CONTACT.address.join(', ')}
+            embedUrl={CONTACT.mapEmbedUrl || undefined}
+          />
         </section>
 
         {/* Message sent */}
