@@ -7,12 +7,12 @@ import MapPlaceholder from '../../components/MapPlaceholder/MapPlaceholder';
 import PageHeading from '../../components/PageHeading/PageHeading';
 import './ContactPage.css';
 
-type Values = { name: string; email: string; message: string };
+type Values = { name: string; email: string; phone: string; message: string };
 type Field = keyof Values;
 type Errors = Partial<Record<Field, string>>;
 
-const FIELDS: Field[] = ['name', 'email', 'message'];
-const EMPTY: Values = { name: '', email: '', message: '' };
+const FIELDS: Field[] = ['name', 'email', 'phone', 'message'];
+const EMPTY: Values = { name: '', email: '', phone: '', message: '' };
 
 /** Returns an error message for one field, or undefined when it is fine */
 function validateField(field: Field, values: Values): string | undefined {
@@ -27,6 +27,16 @@ function validateField(field: Field, values: Values): string | undefined {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
         ? undefined
         : 'Enter a valid email address, like name@example.com.';
+
+    case 'phone': {
+      // Optional: only check the format when something has been typed
+      if (!value) return undefined;
+      // Allow spaces, dashes and a +91 or 0 prefix
+      const digits = value.replace(/[\s-]/g, '').replace(/^(\+91|0)/, '');
+      return /^[6-9]\d{9}$/.test(digits)
+        ? undefined
+        : 'Enter a 10-digit mobile number, like 98765 43210, or leave it empty.';
+    }
 
     case 'message':
       if (!value) return 'Write a short message.';
@@ -184,7 +194,7 @@ export default function ContactPage() {
             </li>
           </ul>
 
-          <MapPlaceholder />
+          <MapPlaceholder title="Daylight Pantry" address={CONTACT.address.join(', ')} />
         </section>
 
         {/* Message sent */}
@@ -214,11 +224,16 @@ export default function ContactPage() {
           <form className="contact-card" onSubmit={handleSubmit} noValidate>
             <h2 className="contact-card__title">Send us a message</h2>
             <p className="contact-card__intro">
-              All fields are required. Please do not include payment or card details.
+              Name, email and message are required. Please do not include payment or card details.
             </p>
 
             <div className="contact-card__fields">
-              <FormField id="contact-name" label="Name" error={errors.name}>
+              <FormField
+                id="contact-name"
+                label="Name"
+                error={errors.name}
+                className="contact-card__wide"
+              >
                 {(control) => (
                   <input
                     {...control}
@@ -237,6 +252,24 @@ export default function ContactPage() {
                     {...controlProps('email')}
                     type="email"
                     autoComplete="email"
+                    className="form-control"
+                  />
+                )}
+              </FormField>
+
+              <FormField
+                id="contact-phone"
+                label="Mobile number (optional)"
+                hint="10 digits, for example 98765 43210"
+                error={errors.phone}
+              >
+                {(control) => (
+                  <input
+                    {...control}
+                    {...controlProps('phone')}
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     className="form-control"
                   />
                 )}

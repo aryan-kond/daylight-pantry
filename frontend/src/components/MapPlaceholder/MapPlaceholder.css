@@ -1,8 +1,8 @@
 .map-placeholder {
   position: relative;
-  min-height: 240px;
+  min-height: 260px;
   overflow: hidden;
-  background: #f1f4f9;
+  background: #f1efe9;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-overlay);
 }
@@ -14,32 +14,53 @@
   height: 100%;
 }
 
-/* White circle with an orange pin in the middle */
-.map-placeholder__pin {
+/* Info card in the top left corner */
+.map-placeholder__card {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
+  top: var(--space-3);
+  left: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  width: min(17rem, calc(100% - 2 * var(--space-3)));
+  padding: var(--space-3) var(--space-4);
   background: var(--color-canvas);
-  border-radius: 50%;
+  border-radius: var(--radius-input);
   box-shadow: var(--shadow-overlay);
-  color: var(--color-primary);
-  transform: translate(-50%, -50%);
 }
 
-.map-placeholder__label {
-  position: absolute;
-  bottom: var(--space-3);
-  left: 50%;
-  padding: 4px var(--space-3);
-  background: var(--color-canvas);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-pill);
+.map-placeholder__title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.map-placeholder__address {
+  margin: 0;
   color: var(--color-text-secondary);
-  font-size: var(--text-meta); /* 13px */
-  transform: translateX(-50%);
+  font-size: 0.8125rem; /* 13px */
+  line-height: 1.4;
+}
+
+/* Compact version of the shared primary button */
+.map-placeholder__open {
+  min-width: 0;
+  height: 36px;
+  margin-top: var(--space-2);
+  padding: 0 var(--space-4);
+  font-size: 0.875rem; /* 14px */
+}
+
+/* The pin's tip sits on its position, so it points at the spot */
+.map-placeholder__pin {
+  position: absolute;
+  top: 74%;
+  left: 62%;
+  width: 28px;
+  height: 38px;
+  filter: drop-shadow(0 3px 3px rgb(24 36 58 / 0.3));
+  transform: translate(-50%, -100%);
 }
