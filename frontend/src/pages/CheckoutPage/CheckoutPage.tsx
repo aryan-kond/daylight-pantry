@@ -16,6 +16,7 @@ import {
   type PaymentMethod,
 } from '../../utils/checkoutValidation';
 import { submitOrder } from '../../utils/mockOrder';
+import { useOrderStore } from '../../store/orderStore';
 import CheckoutSummary from '../../components/CheckoutSummary/CheckoutSummary';
 import FormField from '../../components/FormField/FormField';
 import OrderConfirmation, {
@@ -39,6 +40,7 @@ export default function CheckoutPage() {
   const quantities = useCartStore((state) => state.quantities);
   const promoCode = useCartStore((state) => state.promoCode);
   const clearCart = useCartStore((state) => state.clearCart);
+  const addOrder = useOrderStore((state) => state.addOrder);
 
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [values, setValues] = useState<FormValues>(EMPTY_VALUES);
@@ -116,6 +118,21 @@ export default function CheckoutPage() {
       itemCount,
       total,
       payment: values.payment,
+    });
+    addOrder({
+      orderNumber: result.orderNumber,
+      placedAt: new Date().toISOString(),
+      items: lines.map(({ product, quantity }) => ({
+        name: product.name,
+        quantity,
+        price: product.price,
+      })),
+      total,
+      payment: values.payment,
+      addressLines: [
+        values.address.trim(),
+        `${values.city.trim()}, ${values.state} ${values.pincode.trim()}`,
+      ],
     });
     clearCart();
     setStatus('idle');

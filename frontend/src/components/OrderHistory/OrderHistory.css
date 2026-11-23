@@ -1,0 +1,172 @@
+.order-history {
+  padding: var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+}
+
+.order-history__title {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+}
+
+.order-history__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-8) 0 var(--space-4);
+  text-align: center;
+}
+
+.order-history__empty-text {
+  max-width: 40ch;
+  margin: 0;
+  color: var(--color-text-body);
+}
+
+.order-history__list {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.order-history__list > li {
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ---------- One order: a row that opens to show the details ---------- */
+
+.order__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'main chevron'
+    'status total';
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-4) 0;
+  border-radius: var(--radius-input); /* shapes the keyboard focus ring */
+  cursor: pointer;
+  list-style: none;
+}
+
+/* Hide the browser's own triangle, we draw a chevron instead */
+.order__summary::-webkit-details-marker {
+  display: none;
+}
+
+.order__main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.order__number {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.order__date {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+}
+
+/* The words "Confirmed" carry the meaning along with the green check */
+.order__status {
+  grid-area: status;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-positive);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 600;
+}
+
+.order__total {
+  grid-area: total;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  text-align: right;
+}
+
+.order__chevron {
+  grid-area: chevron;
+  color: var(--color-text-secondary);
+  transition: transform var(--duration-state) var(--ease-standard);
+}
+
+.order[open] .order__chevron {
+  transform: rotate(180deg);
+}
+
+.order__body {
+  padding: 0 0 var(--space-4);
+}
+
+.order__items {
+  margin: 0;
+  padding: var(--space-3) 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.order__items li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-1) 0;
+  color: var(--color-text-body);
+}
+
+.order__meta {
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.order__meta > div {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-1) 0;
+}
+
+.order__meta dt {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem; /* 15px */
+}
+
+.order__meta dd {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.order__line {
+  display: block;
+}
+
+.order__note {
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem; /* 14px */
+}
+
+.order__note a {
+  border-radius: var(--radius-input); /* shapes the keyboard focus ring */
+  color: var(--color-text-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 640px) {
+  .order__summary {
+    grid-template-columns: minmax(0, 1fr) auto 7rem auto;
+    grid-template-areas: 'main status total chevron';
+    gap: var(--space-4);
+  }
+}

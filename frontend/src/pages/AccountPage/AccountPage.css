@@ -1,0 +1,63 @@
+.account-page {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter) var(--space-12);
+}
+
+/* Mobile first: details, then order history */
+.account-page__layout {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.account-card {
+  padding: var(--space-6);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  box-shadow: var(--shadow-card);
+}
+
+.account-card__title {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+}
+
+.account-card__list {
+  margin: var(--space-4) 0 var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.account-card__list > div {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.account-card__list dt {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem; /* 14px */
+}
+
+.account-card__list dd {
+  margin: 2px 0 0;
+  color: var(--color-text-primary);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.account-card__signout {
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  .account-page {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-16);
+  }
+
+  .account-page__layout {
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+}

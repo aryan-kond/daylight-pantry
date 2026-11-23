@@ -11,6 +11,7 @@ import OurStoryPage from './pages/OurStoryPage/OurStoryPage';
 import JournalPage from './pages/JournalPage/JournalPage';
 import ArticlePage from './pages/ArticlePage/ArticlePage';
 import ContactPage from './pages/ContactPage/ContactPage';
+import AccountPage from './pages/AccountPage/AccountPage';
 import './App.css';
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/journal" element={<JournalPage />} />
           <Route path="/journal/:slug" element={<ArticlePage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Routes>
       </main>
       <Footer />
